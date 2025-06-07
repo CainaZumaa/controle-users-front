@@ -1,0 +1,166 @@
+/* Variáveis animações */
+:root {
+  --animation-duration-fast: 0.2s;
+  --animation-duration-normal: 0.3s;
+  --animation-duration-slow: 0.5s;
+  --animation-timing: cubic-bezier(0.4, 0, 0.2, 1);
+  --animation-timing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Otimização */
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform, opacity;
+}
+
+.optimize-rendering {
+  contain: content;
+  contain-intrinsic-size: 0;
+  content-visibility: auto;
+  transform: translateZ(0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Animações Base */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+/* Animações de Fundo */
+@keyframes starTwinkle {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.8) translateZ(0);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.2) translateZ(0);
+  }
+}
+
+@keyframes floatEffect {
+  0%,
+  100% {
+    transform: translateY(0) scale(1) translateZ(0);
+  }
+  50% {
+    transform: translateY(-20px) scale(1.05) translateZ(0);
+  }
+}
+
+@keyframes pulseEffect {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: translate(-50%, -50%) scale(1) translateZ(0);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(1.1) translateZ(0);
+  }
+}
+
+/* Classes de Animações */
+.animate-fade-in {
+  animation: fadeIn var(--animation-duration-normal) var(--animation-timing);
+}
+
+.animate-slide-up {
+  animation: slideUp var(--animation-duration-normal) var(--animation-timing);
+}
+
+.animate-pulse {
+  animation: pulse var(--animation-duration-slow) var(--animation-timing)
+    infinite;
+}
+
+.animate-star {
+  animation: starTwinkle var(--twinkle-duration, 2s) infinite alternate;
+  animation-timing-function: var(--animation-timing);
+}
+
+.animate-float {
+  animation: floatEffect var(--float-duration, 6s) infinite;
+  animation-timing-function: var(--animation-timing);
+}
+
+.animate-pulse-effect {
+  animation: pulseEffect var(--pulse-duration, 10s) infinite;
+  animation-timing-function: var(--animation-timing);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-slide-up,
+  .animate-pulse,
+  .animate-star,
+  .animate-float,
+  .animate-pulse-effect {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Transição */
+.transition-all {
+  transition: all var(--animation-duration-normal) var(--animation-timing);
+}
+
+.transition-transform {
+  transition: transform var(--animation-duration-normal) var(--animation-timing);
+}
+
+.transition-opacity {
+  transition: opacity var(--animation-duration-normal) var(--animation-timing);
+}
+
+/* Efeitos de Hover */
+.hover-lift {
+  transition: transform var(--animation-duration-normal)
+    var(--animation-timing-bounce);
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+.hover-scale {
+  transition: transform var(--animation-duration-normal) var(--animation-timing);
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
