@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# User Management Frontend
 
-## Getting Started
+Interface moderna e responsiva para o sistema centralizado de gerenciamento de usuários.
 
-First, run the development server:
+## 📋 Sobre o Projeto
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Frontend desenvolvido para integrar com a **API de Gerenciamento de Usuários**, oferecendo uma experiência de usuário moderna e intuitiva. Implementa autenticação tradicional e Magic Link, com animações suaves e design responsivo.
+
+## 🚀 Tecnologias
+
+- **React** - Biblioteca JavaScript
+- **Next.js** - Framework React
+- **Material-UI** - Componentes de UI
+- **Emotion** - Estilização CSS-in-JS
+- **Axios** - Cliente HTTP
+- **React Hook Form** - Gerenciamento de formulários
+- **JWT Decode** - Manipulação de tokens
+- **Framer Motion** - Animações
+
+## ⚙️ Configuração
+
+### 1. Variáveis de Ambiente
+
+Crie um arquivo `.env.local` na raiz do projeto:
+
+```env
+# API
+NEXT_PUBLIC_API_URL=http://localhost:3000
+
+# Ambiente
+NODE_ENV=development
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Instalação
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```bash
+# Clone o repositório
+git clone https://github.com/seu-usuario/control-users-front.git
+cd control-users-front
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Instale as dependências
+npm install
 
-## Learn More
+# Inicie o servidor de desenvolvimento
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 🎯 Funcionalidades
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Autenticação
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Login Tradicional**: Email e senha
+- **Magic Link**: Autenticação sem senha
+- **Persistência**: Tokens JWT no localStorage
+- **Proteção**: Rotas autenticadas
 
-## Deploy on Vercel
+## 🎯 Performance
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Otimizações Implementadas
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Lazy Loading**: Componentes carregados sob demanda
+- **Memoização**: Uso de `useMemo` e `useCallback`
+- **Animações**: Otimizadas com `transform` e `opacity`
+
+## 📱 Responsividade
+
+- **Mobile First**: Design adaptativo
+- **Breakpoints**:
+  - Mobile: < 600px
+  - Tablet: 600px - 960px
+  - Desktop: > 960px
+
+---
+
+**Desenvolvido para o Projeto Frontend Acadêmico** | Equipe Frontend - Sistema de Gerenciamento de Usuários
