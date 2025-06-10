@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   Box,
   Card,
@@ -25,13 +26,8 @@ import {
   VisibilityOff,
   AccountCircle,
   ArrowForward,
-  Star,
 } from "@mui/icons-material";
 import AnimatedBackground from "./AnimatedBackground";
-import {
-  useFormValidation,
-  commonValidationRules,
-} from "../hooks/useFormValidation";
 import {
   colors,
   gradients,
@@ -41,27 +37,70 @@ import {
 } from "../styles/theme";
 
 const SpaceLogin = () => {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [isMagicMode, setIsMagicMode] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  const { formData, errors, isValid, handleInputChange, validateForm } =
-    useFormValidation(
-      { email: "", password: "" },
-      isMagicMode
-        ? { email: commonValidationRules.email }
-        : commonValidationRules
-    );
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm()) return;
-
     setIsLoading(true);
+    setError("");
+    setSuccess("");
+
     try {
-      // Simulação de chamada à API
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      console.log("Tentativa de login:", { formData, isMagicMode });
+      const endpoint = isMagicMode ? "/auth/magic" : "/auth/login";
+      console.log(
+        "🚀 Fazendo requisição para:",
+        `http://localhost:3000${endpoint}`
+      );
+      console.log("📦 Dados enviados:", formData);
+
+      const response = await fetch(`http://localhost:3000${endpoint}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          senha: formData.password,
+        }),
+      });
+
+      const data = await response.json();
+      console.log("📥 Resposta do servidor:", data);
+
+      if (!response.ok) {
+        throw new Error(data.message || "Erro ao fazer login");
+      }
+
+      if (isMagicMode) {
+        setSuccess("Link de acesso enviado! Verifique seu email.");
+      } else {
+        console.log("🔑 Token recebido:", data.token);
+        console.log("👤 Dados do usuário:", data.usuario);
+        localStorage.setItem("token", data.token);
+        setSuccess("Login realizado com sucesso!");
+        setTimeout(() => {
+          router.push("/home");
+        }, 1000);
+      }
+    } catch (error) {
+      console.error("❌ Erro no login:", error);
+      setError(
+        error.message || "Erro ao fazer login. Verifique suas credenciais."
+      );
     } finally {
       setIsLoading(false);
     }
@@ -127,6 +166,7 @@ const SpaceLogin = () => {
                   ...glassEffect,
                   borderRadius: 3,
                   boxShadow: shadows.hover,
+                  p: 4,
                 }}
               >
                 <CardContent sx={{ p: 4 }}>
@@ -157,6 +197,18 @@ const SpaceLogin = () => {
                     />
                   </Box>
 
+                  {error && (
+                    <Alert severity="error" sx={{ width: "100%", mb: 2 }}>
+                      {error}
+                    </Alert>
+                  )}
+
+                  {success && (
+                    <Alert severity="success" sx={{ width: "100%", mb: 2 }}>
+                      {success}
+                    </Alert>
+                  )}
+
                   <Box
                     component="form"
                     onSubmit={handleSubmit}
@@ -167,41 +219,21 @@ const SpaceLogin = () => {
                       fullWidth
                       type="email"
                       label="Email Address"
+                      name="email"
                       value={formData.email}
-                      onChange={(e) =>
-                        handleInputChange("email", e.target.value)
-                      }
-                      error={!!errors.email}
-                      helperText={errors.email}
+                      onChange={handleInputChange}
                       required
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
-                            <Email
-                              sx={{
-                                color: isValid.email
-                                  ? colors.success.main
-                                  : colors.text.secondary,
-                              }}
-                            />
-                          </InputAdornment>
-                        ),
-                        endAdornment: isValid.email && (
-                          <InputAdornment position="end">
-                            <Star
-                              sx={{ color: colors.success.main, fontSize: 16 }}
-                            />
+                            <Email sx={{ color: colors.text.secondary }} />
                           </InputAdornment>
                         ),
                         sx: {
                           backgroundColor: "rgba(0,0,0,0.3)",
                           color: colors.text.primary,
                           "& .MuiOutlinedInput-notchedOutline": {
-                            borderColor: errors.email
-                              ? colors.error.main
-                              : isValid.email
-                              ? colors.success.main
-                              : "rgba(255,255,255,0.3)",
+                            borderColor: "rgba(255,255,255,0.3)",
                           },
                           "&:hover .MuiOutlinedInput-notchedOutline": {
                             borderColor: "rgba(255,255,255,0.5)",
@@ -214,9 +246,6 @@ const SpaceLogin = () => {
                       InputLabelProps={{
                         sx: { color: colors.text.secondary },
                       }}
-                      FormHelperTextProps={{
-                        sx: { color: colors.error.main },
-                      }}
                     />
 
                     {/* Campo de Senha (apenas no login tradicional) */}
@@ -226,12 +255,9 @@ const SpaceLogin = () => {
                           fullWidth
                           type={showPassword ? "text" : "password"}
                           label="Password"
+                          name="password"
                           value={formData.password}
-                          onChange={(e) =>
-                            handleInputChange("password", e.target.value)
-                          }
-                          error={!!errors.password}
-                          helperText={errors.password}
+                          onChange={handleInputChange}
                           required
                           InputProps={{
                             startAdornment: (
@@ -257,9 +283,7 @@ const SpaceLogin = () => {
                               backgroundColor: "rgba(0,0,0,0.3)",
                               color: colors.text.primary,
                               "& .MuiOutlinedInput-notchedOutline": {
-                                borderColor: errors.password
-                                  ? colors.error.main
-                                  : "rgba(255,255,255,0.3)",
+                                borderColor: "rgba(255,255,255,0.3)",
                               },
                               "&:hover .MuiOutlinedInput-notchedOutline": {
                                 borderColor: "rgba(255,255,255,0.5)",
@@ -273,9 +297,6 @@ const SpaceLogin = () => {
                           InputLabelProps={{
                             sx: { color: colors.text.secondary },
                           }}
-                          FormHelperTextProps={{
-                            sx: { color: colors.error.main },
-                          }}
                         />
                       </Fade>
                     )}
@@ -288,8 +309,7 @@ const SpaceLogin = () => {
                       disabled={
                         isLoading ||
                         !formData.email ||
-                        (!isMagicMode && !formData.password) ||
-                        !validateForm()
+                        (!isMagicMode && !formData.password)
                       }
                       sx={{
                         mt: 2,
@@ -305,6 +325,7 @@ const SpaceLogin = () => {
                         transition: transitions.smooth,
                         color: colors.text.primary,
                         fontWeight: "bold",
+                        boxShadow: shadows.button,
                       }}
                       endIcon={
                         isLoading ? (
@@ -316,11 +337,11 @@ const SpaceLogin = () => {
                     >
                       {isLoading
                         ? isMagicMode
-                          ? "Sending access link..."
-                          : "Authenticating..."
+                          ? "Sending magic link..."
+                          : "Signing in..."
                         : isMagicMode
-                        ? "Login without password"
-                        : "Login"}
+                        ? "Log in with email"
+                        : "Sign in"}
                     </Button>
                   </Box>
 
