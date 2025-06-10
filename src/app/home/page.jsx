@@ -12,11 +12,10 @@ import {
   transitions,
 } from "../../styles/theme";
 
-// Função para decodificar caracteres UTF-8 (Nomes com acentos tipo 'Cainã' etc...)
 const decodeUTF8 = (str) => {
   try {
     return decodeURIComponent(escape(str));
-  } catch (e) {
+  } catch {
     return str;
   }
 };
@@ -27,47 +26,17 @@ const HomePage = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    console.log("🔍 Token encontrado no localStorage:", token ? "Sim" : "Não");
-
     if (!token) {
-      console.log("⚠️ Nenhum token encontrado, redirecionando para login");
       router.push("/");
       return;
     }
 
     try {
-      console.log("🔑 Token completo:", token);
-
-      // Decodifica o token JWT
-      const [header, payload, signature] = token.split(".");
-      console.log("📄 Header do token:", header);
-      console.log("📄 Payload do token (encoded):", payload);
-
-      const base64Url = payload;
-      const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-      const payloadObj = JSON.parse(atob(base64));
-      console.log("📄 Payload decodificado (objeto):", payloadObj);
-
-      // Decodifica o nome para UTF-8
-      const rawName =
-        payloadObj.nome ||
-        payloadObj.name ||
-        payloadObj.user?.nome ||
-        payloadObj.user?.name ||
-        payloadObj.usuario?.nome ||
-        payloadObj.usuario?.name;
-      const decodedName = decodeUTF8(rawName);
-
-      console.log("👤 Nome encontrado:", decodedName);
-      console.log("🔍 Campos disponíveis:", Object.keys(payloadObj));
-
-      setUserName(decodedName || "Usuário");
-    } catch (error) {
-      console.error("❌ Erro ao decodificar token:", error);
-      console.error("Detalhes do erro:", {
-        message: error.message,
-        stack: error.stack,
-      });
+      const [, payload] = token.split(".");
+      const decoded = atob(payload.replace(/-/g, "+").replace(/_/g, "/"));
+      const { nome } = JSON.parse(decoded);
+      setUserName(decodeUTF8(nome));
+    } catch {
       setUserName("Usuário");
     }
   }, [router]);
