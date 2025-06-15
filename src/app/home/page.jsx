@@ -50,7 +50,7 @@ const HomePage = () => {
     <Box
       sx={{
         minHeight: "100vh",
-        background: gradients.background,
+        background: "#096c9e",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",

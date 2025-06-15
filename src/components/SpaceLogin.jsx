@@ -233,13 +233,13 @@ const SpaceLogin = () => {
                           backgroundColor: "rgba(0,0,0,0.3)",
                           color: colors.text.primary,
                           "& .MuiOutlinedInput-notchedOutline": {
-                            borderColor: "rgba(255,255,255,0.3)",
+                            borderColor: "#096c9e",
                           },
                           "&:hover .MuiOutlinedInput-notchedOutline": {
-                            borderColor: "rgba(255,255,255,0.5)",
+                            borderColor: "#fefefe",
                           },
                           "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                            borderColor: colors.primary.main,
+                            borderColor: "#fefefe",
                           },
                         },
                       }}
@@ -283,14 +283,14 @@ const SpaceLogin = () => {
                               backgroundColor: "rgba(0,0,0,0.3)",
                               color: colors.text.primary,
                               "& .MuiOutlinedInput-notchedOutline": {
-                                borderColor: "rgba(255,255,255,0.3)",
+                                borderColor: "#096c9e",
                               },
                               "&:hover .MuiOutlinedInput-notchedOutline": {
-                                borderColor: "rgba(255,255,255,0.5)",
+                                borderColor: "#fefefe",
                               },
                               "&.Mui-focused .MuiOutlinedInput-notchedOutline":
                                 {
-                                  borderColor: colors.primary.main,
+                                  borderColor: "#fefefe",
                                 },
                             },
                           }}
@@ -352,11 +352,11 @@ const SpaceLogin = () => {
                         severity="info"
                         sx={{
                           mt: 3,
-                          backgroundColor: "rgba(156,39,176,0.2)",
-                          border: "1px solid rgba(156,39,176,0.3)",
-                          color: colors.text.primary,
+                          backgroundColor: "rgba(9, 108, 158, 0.2)",
+                          border: "1px solid rgba(9, 108, 158, 0.7)",
+                          color: "#fefefe",
                           "& .MuiAlert-icon": {
-                            color: colors.primary.main,
+                            color: "#17a2b8",
                           },
                         }}
                       >

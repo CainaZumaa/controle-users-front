@@ -9,24 +9,10 @@ const theme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#ff1493", // Pink suave
-      light: "#ff69b4", // Pink mais forte
-      dark: "#dc143c", // Vermelho/Pink
-      contrastText: "#ffffff", // Texto branco pra contrastar
-    },
-    secondary: {
-      main: "#ba55d3", // Roxo médio
-      light: "#dda0dd", // Roxo claro
-      dark: "#9932cc", // Roxo escuro
-      contrastText: "#ffffff", // branco
-    },
-    background: {
-      default: "#1a0b2e", // Fundo roxo escuro
-      paper: "rgba(255,255,255,0.1)", // Transparência suave pro card
-    },
-    text: {
-      primary: "#ffffff", // Texto principal branco
-      secondary: "rgba(255,192,203,0.8)", // Texto secundário com tom de rosa
+      main: "#fefefe",
+      light: "#FF3333",
+      dark: "#CC0000",
+      contrastText: "#ffffff",
     },
     error: {
       main: "#EF4444", // Erro
@@ -74,7 +60,7 @@ const theme = createTheme({
           fontWeight: 600,
           "&:hover": {
             transform: "translateY(-2px)", // flutuação no hover
-            boxShadow: "0 4px 12px rgba(255, 20, 147, 0.3)", // dark shadow
+            boxShadow: "0 4px 12px rgba(255, 0, 0, 0.3)", // dark shadow
           },
         },
         contained: {
@@ -99,30 +85,6 @@ const theme = createTheme({
           "& .MuiOutlinedInput-root": {
             borderRadius: 12,
             transition: "all 0.2s ease-in-out",
-            "&:hover": {
-              "& .MuiOutlinedInput-notchedOutline": {
-                borderColor: "#ff1493",
-              },
-            },
-            "&.Mui-focused": {
-              "& .MuiOutlinedInput-notchedOutline": {
-                borderColor: "#ff1493", // borda rosa - hover
-                borderWidth: 1,
-              },
-            },
-          },
-        },
-      },
-    },
-    MuiSwitch: {
-      styleOverrides: {
-        root: {
-          "& .MuiSwitch-thumb": {
-            // gradiente no botão do switch
-            background: "linear-gradient(45deg, #ff1493, #ba55d3)",
-          },
-          "& .MuiSwitch-track": {
-            backgroundColor: "rgba(255, 20, 147, 0.3)", // rosa suave
           },
         },
       },

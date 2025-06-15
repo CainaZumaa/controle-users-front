@@ -1,23 +1,19 @@
 export const colors = {
   primary: {
-    main: "#ff1493",
-    light: "#ff69b4",
-    dark: "#dc143c",
+    main: "#096c9e",
+    light: "#0891b2",
+    dark: "#075985",
     contrastText: "#ffffff",
   },
   secondary: {
-    main: "#ba55d3",
-    light: "#dda0dd",
-    dark: "#9932cc",
+    main: "#28a745",
+    light: "#34d058",
+    dark: "#22863a",
     contrastText: "#ffffff",
-  },
-  background: {
-    default: "#1a0b2e",
-    paper: "rgba(255,255,255,0.1)",
   },
   text: {
     primary: "#ffffff",
-    secondary: "rgba(255,192,203,0.8)",
+    secondary: "#cfcfcf",
   },
   error: {
     main: "#EF4444",
@@ -32,15 +28,14 @@ export const colors = {
 };
 
 export const gradients = {
-  primary: "linear-gradient(45deg, #ff1493 30%, #ba55d3 90%)",
-  secondary: "linear-gradient(45deg, #9c27b0, #e91e63)",
-  background: "linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 50%, #1a0b2e 100%)",
-  text: "linear-gradient(45deg, #9c27b0, #e91e63, #2196f3)",
+  primary: "linear-gradient(135deg, #096c9e 0%, #28a745 50%, #17a2b8 100%)",
+  secondary: "linear-gradient(135deg, #28a745 50%, #17a2b8 100%)",
+  text: "linear-gradient(135deg, #28a745 0%, #28a745 50%, #3f7e44 100%)",
 };
 
 export const shadows = {
   card: "0 8px 32px rgba(0, 0, 0, 0.2)",
-  button: "0 4px 12px rgba(255, 20, 147, 0.3)",
+  button: "0 4px 12px rgba(9, 108, 158, 0.3)",
   hover: "0 25px 50px -12px rgba(0,0,0,0.25)",
 };
 

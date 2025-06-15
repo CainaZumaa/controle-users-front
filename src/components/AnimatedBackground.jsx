@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useCallback } from "react";
+import React, { useMemo } from "react";
 import { Box } from "@mui/material";
 import { optimizeRendering } from "../styles/theme";
 
@@ -15,7 +15,9 @@ const Star = React.memo(({ star }) => (
       height: `${star.size}px`,
       backgroundColor: star.color,
       borderRadius: "50%",
-      boxShadow: `0 0 ${star.size * 1.5}px ${star.size}px ${star.color}`,
+      boxShadow: `0 0 ${star.size * 2}px ${star.size * 0.8}px ${
+        star.glowColor
+      }`,
       animation: `fall ${star.duration}s cubic-bezier(0.4, 0, 0.2, 1) ${star.delay}s infinite`,
       opacity: star.opacity,
       ...optimizeRendering,
@@ -25,61 +27,43 @@ const Star = React.memo(({ star }) => (
 
 Star.displayName = "Star";
 
-// Componente para flashes
-const Flash = React.memo(({ flash }) => (
-  <Box
-    sx={{
-      position: "absolute",
-      left: `${flash.x}%`,
-      top: `${flash.y}%`,
-      width: `${flash.size}px`,
-      height: `${flash.size}px`,
-      background: `radial-gradient(circle, 
-        hsla(330, 100%, 70%, 0.1) 0%, 
-        hsla(${330 + flash.hue}, 100%, 70%, 0.05) 40%,
-        hsla(${330 + flash.hue}, 100%, 70%, 0) 70%
-      )`,
-      borderRadius: "50%",
-      animation: `pulse ${flash.duration}s ease-in-out ${flash.delay}s infinite`,
-      opacity: 0,
-      transform: "translate(-50%, -50%) translateZ(0)",
-      filter: "blur(40px)",
-      mixBlendMode: "screen",
-      ...optimizeRendering,
-    }}
-  />
-));
-
-Flash.displayName = "Flash";
-
 const AnimatedBackground = React.memo(() => {
-  // Configuração de estrelas
-  const stars = useMemo(() => {
-    return Array.from({ length: 15 }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: Math.random() * 1.2 + 0.8,
-      duration: Math.random() * 25 + 30,
-      delay: Math.random() * 15,
-      fallSpeed: Math.random() * 0.06 + 0.04,
-      color: Math.random() > 0.5 ? "#ffc0cb" : "#ff69b4",
-      opacity: Math.random() * 0.3 + 0.5,
-    }));
-  }, []);
+  // Paleta de cores harmoniosa com o gradiente azul ODS
+  const colorPalette = {
+    stars: [
+      { color: "#ffffff", glow: "rgba(255, 255, 255, 0.6)" }, // Branco puro
+      { color: "#e8f4fd", glow: "rgba(232, 244, 253, 0.5)" }, // Azul muito claro
+      { color: "#b3e5fc", glow: "rgba(179, 229, 252, 0.6)" }, // Azul claro
+      { color: "#81d4fa", glow: "rgba(129, 212, 250, 0.5)" }, // Azul médio claro
+      { color: "#4fc3f7", glow: "rgba(79, 195, 247, 0.4)" }, // Azul vibrante
+      { color: "#29b6f6", glow: "rgba(41, 182, 246, 0.5)" }, // Azul forte
+      { color: "#03a9f4", glow: "rgba(3, 169, 244, 0.4)" }, // Azul intenso
+      { color: "#a7ffeb", glow: "rgba(167, 255, 235, 0.5)" }, // Verde água claro
+      { color: "#64ffda", glow: "rgba(100, 255, 218, 0.4)" }, // Verde água
+      { color: "#1de9b6", glow: "rgba(29, 233, 182, 0.5)" }, // Verde turquesa
+    ],
+  };
 
-  // Configuração de flashes
-  const flashes = useMemo(() => {
-    return Array.from({ length: 3 }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: Math.random() * 400 + 300,
-      duration: Math.random() * 8 + 8,
-      delay: Math.random() * 6,
-      opacity: Math.random() * 0.15 + 0.05,
-      hue: Math.random() * 8 - 4,
-    }));
+  // Configuração de estrelas com cores melhoradas
+  const stars = useMemo(() => {
+    return Array.from({ length: 20 }, (_, i) => {
+      const colorChoice =
+        colorPalette.stars[
+          Math.floor(Math.random() * colorPalette.stars.length)
+        ];
+      return {
+        id: i,
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        size: Math.random() * 1.8 + 0.6, // Tamanhos variados
+        duration: Math.random() * 20 + 25, // Velocidades diferentes
+        delay: Math.random() * 12,
+        fallSpeed: Math.random() * 0.08 + 0.03,
+        color: colorChoice.color,
+        glowColor: colorChoice.glow,
+        opacity: Math.random() * 0.4 + 0.4, // Opacidades variadas
+      };
+    });
   }, []);
 
   return (
@@ -93,7 +77,7 @@ const AnimatedBackground = React.memo(() => {
         overflow: "hidden",
         zIndex: 0,
         background:
-          "linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 50%, #1a0b2e 100%)",
+          "linear-gradient(135deg, #096c9e 0%, #0891b2 50%, #06b6d4 100%)",
         "&::before": {
           content: '""',
           position: "absolute",
@@ -107,9 +91,6 @@ const AnimatedBackground = React.memo(() => {
         },
       }}
     >
-      {flashes.map((flash) => (
-        <Flash key={`flash-${flash.id}`} flash={flash} />
-      ))}
       {stars.map((star) => (
         <Star key={`star-${star.id}`} star={star} />
       ))}
@@ -121,38 +102,34 @@ const AnimatedBackground = React.memo(() => {
               translateZ(0);
             opacity: 0;
           }
-          10% {
-            opacity: var(--star-opacity, 0.7);
+          15% {
+            opacity: var(--star-opacity, 0.8);
           }
-          90% {
-            opacity: var(--star-opacity, 0.7);
+          85% {
+            opacity: var(--star-opacity, 0.8);
           }
           100% {
             transform: translateY(100vh)
-              translateX(calc(var(--fall-offset, 0) * 1px)) rotate(45deg)
+              translateX(calc(var(--fall-offset, 0) * 1px)) rotate(60deg)
               translateZ(0);
             opacity: 0;
           }
         }
 
-        @keyframes pulse {
-          0%,
-          100% {
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0.9) translateZ(0);
-            filter: blur(40px) brightness(1);
-          }
-          50% {
-            opacity: var(--flash-opacity, 0.15);
-            transform: translate(-50%, -50%) scale(1.05) translateZ(0);
-            filter: blur(45px) brightness(1.05);
+        @media (prefers-reduced-motion: reduce) {
+          .star {
+            animation: none;
           }
         }
 
-        @media (prefers-reduced-motion: reduce) {
-          .star,
-          .flash {
-            animation: none;
+        /* Adiciona um leve shimmer às estrelas */
+        @keyframes shimmer {
+          0%,
+          100% {
+            filter: brightness(1) saturate(1);
+          }
+          50% {
+            filter: brightness(1.2) saturate(1.1);
           }
         }
       `}</style>

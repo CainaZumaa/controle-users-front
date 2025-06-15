@@ -3,11 +3,6 @@
 @import "tailwindcss/utilities";
 
 :root {
-  --primary-gradient: linear-gradient(135deg, #ff1493 0%, #ba55d3 100%);
-  --glass-bg: rgba(26, 11, 46, 0.8);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-
   font-family: "Inter", "Roboto", "Helvetica", "Arial", sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -22,12 +17,11 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Estilos Base */
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: var(--glass-bg);
+  background: #096c9e;
   color: #f8fafc;
   overflow-x: hidden;
 }
@@ -69,11 +63,11 @@ body {
 }
 
 .glass {
-  background: var(--glass-bg);
+  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
 ::-webkit-scrollbar {
@@ -86,23 +80,21 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #ff1493;
+  background: #096c9e;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #ba55d3;
+  background: #0891b2;
 }
 
-/* Hover Style */
 :focus-visible {
-  outline: 2px solid #ff1493;
+  outline: 2px solid #096c9e;
   outline-offset: 2px;
 }
 
-/* Seleção Styles */
 ::selection {
-  background: #ff1493;
+  background: #096c9e;
   color: white;
 }
 
@@ -158,14 +150,9 @@ body {
   transform: translateY(-2px);
 }
 
-/* Dark Mode */
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;
-  }
-
-  body {
-    background-color: #1a0b2e;
   }
 }
 
