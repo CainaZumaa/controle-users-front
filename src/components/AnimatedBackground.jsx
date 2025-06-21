@@ -77,7 +77,7 @@ const AnimatedBackground = React.memo(() => {
         overflow: "hidden",
         zIndex: 0,
         background:
-          "linear-gradient(135deg, #096c9e 0%, #0891b2 50%, #06b6d4 100%)",
+          "linear-gradient(180deg, #034a6b 0%, #096c9e 30%, #0891b2 60%, #06b6d4 80%, rgba(40, 167, 69, 0.85) 100%)",
         "&::before": {
           content: '""',
           position: "absolute",
@@ -85,9 +85,6 @@ const AnimatedBackground = React.memo(() => {
           left: 0,
           right: 0,
           bottom: 0,
-          background:
-            "radial-gradient(circle at center, transparent 0%, #1a0b2e 100%)",
-          opacity: 0.8,
         },
       }}
     >

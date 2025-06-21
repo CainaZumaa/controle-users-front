@@ -30,7 +30,7 @@ export const colors = {
 export const gradients = {
   primary: "linear-gradient(135deg, #096c9e 0%, #28a745 50%, #17a2b8 100%)",
   secondary: "linear-gradient(135deg, #28a745 50%, #17a2b8 100%)",
-  text: "linear-gradient(135deg, #28a745 0%, #28a745 50%, #3f7e44 100%)",
+  text: "#f0f0f0",
 };
 
 export const shadows = {

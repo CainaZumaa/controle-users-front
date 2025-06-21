@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Design System - ODS</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding: 30px;
+        background: linear-gradient(135deg, #096c9e, #0a7cb8);
+        border-radius: 20px;
+        color: white;
+        box-shadow: 0 15px 35px rgba(9, 108, 158, 0.3);
+      }
+
+      .header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+
+      .header p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+      }
+
+      .section {
+        background: white;
+        margin-bottom: 30px;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border-left: 5px solid #096c9e;
+      }
+
+      .section h2 {
+        color: #096c9e;
+        margin-bottom: 20px;
+        font-size: 1.8rem;
+        border-bottom: 2px solid #e8f4fd;
+        padding-bottom: 10px;
+      }
+
+      .color-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+      }
+
+      .color-card {
+        text-align: center;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+
+      .color-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .color-sample {
+        height: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 1.1rem;
+      }
+
+      .color-info {
+        padding: 15px;
+        background: white;
+      }
+
+      .color-name {
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #333;
+      }
+
+      .color-code {
+        font-family: "Courier New", monospace;
+        font-size: 0.9rem;
+        color: #666;
+        background: #f8f9fa;
+        padding: 5px 8px;
+        border-radius: 5px;
+        margin: 2px 0;
+      }
+
+      .typography-sample {
+        margin: 15px 0;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border-left: 4px solid #096c9e;
+      }
+
+      .component-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+      }
+
+      .component-sample {
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 12px;
+        border: 2px solid #e9ecef;
+      }
+
+      .btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin: 5px;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #096c9e, #0a7cb8);
+        color: white;
+        box-shadow: 0 4px 15px rgba(9, 108, 158, 0.3);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(9, 108, 158, 0.4);
+      }
+
+      .btn-secondary {
+        background: linear-gradient(135deg, #28a745, #34ce57);
+        color: white;
+        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+      }
+
+      .btn-outline {
+        background: transparent;
+        color: #096c9e;
+        border: 2px solid #096c9e;
+      }
+
+      .btn-outline:hover {
+        background: #096c9e;
+        color: white;
+      }
+
+      .input-group {
+        margin: 15px 0;
+      }
+
+      .input-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .form-input {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+      }
+
+      .form-input:focus {
+        outline: none;
+        border-color: #096c9e;
+        box-shadow: 0 0 0 3px rgba(9, 108, 158, 0.1);
+      }
+
+      .login-preview {
+        background: linear-gradient(
+          135deg,
+          #096c9e 0%,
+          #0a7cb8 50%,
+          #28a745 100%
+        );
+        padding: 40px;
+        border-radius: 20px;
+        color: white;
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .login-card {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 40px;
+        border-radius: 15px;
+        color: #333;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      .ods-colors {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+      }
+
+      .gradient-sample {
+        height: 60px;
+        border-radius: 8px;
+        margin: 10px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+      }
+
+      .sustainability-gradient {
+        background: linear-gradient(
+          135deg,
+          #096c9e 0%,
+          #28a745 50%,
+          #17a2b8 100%
+        );
+      }
+
+      .earth-gradient {
+        background: linear-gradient(
+          135deg,
+          #4a90e2 0%,
+          #7ed321 50%,
+          #f5a623 100%
+        );
+      }
+
+      .ocean-gradient {
+        background: linear-gradient(
+          135deg,
+          #096c9e 0%,
+          #0891b2 50%,
+          #06b6d4 100%
+        );
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>🌍 Design System - ODS</h1>
+        <p>Sistema de Design para Objetivos de Desenvolvimento Sustentável</p>
+      </div>
+
+      <!-- Paleta Principal -->
+      <div class="section">
+        <h2>🎨 Paleta de Cores Principal</h2>
+        <div class="color-grid">
+          <div class="color-card">
+            <div class="color-sample" style="background: #096c9e">ONU Azul</div>
+            <div class="color-info">
+              <div class="color-name">Azul ONU (Principal)</div>
+              <div class="color-code">#096c9e</div>
+              <div class="color-code">rgb(9, 108, 158)</div>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-sample" style="background: #28a745">
+              Verde Sustentável
+            </div>
+            <div class="color-info">
+              <div class="color-name">Verde Sustentável</div>
+              <div class="color-code">#28a745</div>
+              <div class="color-code">rgb(40, 167, 69)</div>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-sample" style="background: #17a2b8">
+              Azul Água
+            </div>
+            <div class="color-info">
+              <div class="color-name">Azul Água</div>
+              <div class="color-code">#17a2b8</div>
+              <div class="color-code">rgb(23, 162, 184)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cores das ODS -->
+      <div class="section">
+        <h2>🎯 Cores Específicas das ODS</h2>
+        <div class="ods-colors">
+          <div class="color-card">
+            <div class="color-sample" style="background: #e5243b">ODS 1</div>
+            <div class="color-info">
+              <div class="color-name">Erradicação da Pobreza</div>
+              <div class="color-code">#e5243b</div>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-sample" style="background: #dda63a">ODS 2</div>
+            <div class="color-info">
+              <div class="color-name">Fome Zero</div>
+              <div class="color-code">#dda63a</div>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-sample" style="background: #4c9f38">ODS 3</div>
+            <div class="color-info">
+              <div class="color-name">Saúde e Bem-estar</div>
+              <div class="color-code">#4c9f38</div>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-sample" style="background: #f26a2d">ODS 9</div>
+            <div class="color-info">
+              <div class="color-name">Indústria e Inovação</div>
+              <div class="color-code">#f26a2d</div>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-sample" style="background: #f99d26">ODS 11</div>
+            <div class="color-info">
+              <div class="color-name">Cidades Sustentáveis</div>
+              <div class="color-code">#f99d26</div>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-sample" style="background: #3f7e44">ODS 13</div>
+            <div class="color-info">
+              <div class="color-name">Ação Contra Mudança Global do Clima</div>
+              <div class="color-code">#3f7e44</div>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-sample" style="background: #00689d">ODS 16</div>
+            <div class="color-info">
+              <div class="color-name">Paz, Justiça e Instituições Eficazes</div>
+              <div class="color-code">#00689d</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gradientes para Login -->
+      <div class="section">
+        <h2>🌈 Gradientes para Página de Login</h2>
+        <div class="gradient-sample sustainability-gradient">
+          Gradiente Sustentabilidade Principal
+        </div>
+        <p>
+          <strong>CSS:</strong>
+          <code
+            >background: linear-gradient(135deg, #096c9e 0%, #28a745 50%,
+            #17a2b8 100%);</code
+          >
+        </p>
+
+        <div class="gradient-sample earth-gradient">
+          Gradiente Terra e Natureza
+        </div>
+        <p>
+          <strong>CSS:</strong>
+          <code
+            >background: linear-gradient(135deg, #4a90e2 0%, #7ed321 50%,
+            #f5a623 100%);</code
+          >
+        </p>
+
+        <div class="gradient-sample ocean-gradient">Gradiente Oceano</div>
+        <p>
+          <strong>CSS:</strong>
+          <code
+            >background: linear-gradient(135deg, #096c9e 0%, #0891b2 50%,
+            #06b6d4 100%);</code
+          >
+        </p>
+      </div>
+
+      <!-- Tipografia -->
+      <div class="section">
+        <h2>📝 Tipografia</h2>
+        <div class="typography-sample">
+          <h1 style="color: #096c9e">Título Principal - H1</h1>
+          <p><strong>Font:</strong> Segoe UI, 2.5rem, Bold</p>
+        </div>
+        <div class="typography-sample">
+          <h2 style="color: #28a745">Subtítulo - H2</h2>
+          <p><strong>Font:</strong> Segoe UI, 1.8rem, Semibold</p>
+        </div>
+        <div class="typography-sample">
+          <p style="font-size: 1.1rem">Texto do corpo - Body Text</p>
+          <p><strong>Font:</strong> Segoe UI, 1.1rem, Regular</p>
+        </div>
+      </div>
+
+      <!-- Componentes -->
+      <div class="section">
+        <h2>🧩 Componentes</h2>
+        <div class="component-grid">
+          <div class="component-sample">
+            <h3>Botões</h3>
+            <button class="btn btn-primary">Botão Principal</button>
+            <button class="btn btn-secondary">Botão Secundário</button>
+            <button class="btn btn-outline">Botão Outline</button>
+          </div>
+          <div class="component-sample">
+            <h3>Formulários</h3>
+            <div class="input-group">
+              <label>Email</label>
+              <input
+                type="email"
+                class="form-input"
+                placeholder="seu@email.com"
+              />
+            </div>
+            <div class="input-group">
+              <label>Senha</label>
+              <input
+                type="password"
+                class="form-input"
+                placeholder="••••••••"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview da Página de Login -->
+      <div class="section">
+        <h2>👁️ Preview - Página de Login</h2>
+        <div class="login-preview">
+          <div class="login-card">
+            <h2 style="color: #096c9e; margin-bottom: 10px">🌍 Portal ODS</h2>
+            <p style="color: #666; margin-bottom: 30px">
+              Desenvolvimento Sustentável para um Futuro Melhor
+            </p>
+
+            <div class="input-group">
+              <label>Email</label>
+              <input
+                type="email"
+                class="form-input"
+                placeholder="seu@email.com"
+              />
+            </div>
+            <div class="input-group">
+              <label>Senha</label>
+              <input
+                type="password"
+                class="form-input"
+                placeholder="••••••••"
+              />
+            </div>
+            <button
+              class="btn btn-primary"
+              style="width: 100%; margin-top: 20px"
+            >
+              Entrar no Portal
+            </button>
+            <p style="margin-top: 20px; font-size: 0.9rem; color: #666">
+              Juntos pelos Objetivos de Desenvolvimento Sustentável
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cores de Apoio -->
+      <div class="section">
+        <h2>🎨 Cores de Apoio e Estados</h2>
+        <div class="color-grid">
+          <div class="color-card">
+            <div class="color-sample" style="background: #dc3545">
+              Erro/Alerta
+            </div>
+            <div class="color-info">
+              <div class="color-name">Vermelho Erro</div>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-sample" style="background: #28a745">Sucesso</div>
+            <div class="color-info">
+              <div class="color-name">Verde Sucesso</div>
+              <div class="color-code">#28a745</div>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-sample" style="background: #ffc107; color: #333">
+              Aviso
+            </div>
+            <div class="color-info">
+              <div class="color-name">Amarelo Aviso</div>
+              <div class="color-code">#ffc107</div>
+            </div>
+          </div>
+          <div class="color-card">
+            <div class="color-sample" style="background: #6c757d">Neutro</div>
+            <div class="color-info">
+              <div class="color-name">Cinza Neutro</div>
+              <div class="color-code">#6c757d</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
