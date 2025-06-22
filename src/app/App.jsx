@@ -3,7 +3,9 @@
 import React from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import SpaceLogin from "../components/SpaceLogin";
+import { GOOGLE_CONFIG } from "../config/google";
 
 const theme = createTheme({
   palette: {
@@ -94,10 +96,12 @@ const theme = createTheme({
 
 const App = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <SpaceLogin />
-    </ThemeProvider>
+    <GoogleOAuthProvider clientId={GOOGLE_CONFIG.CLIENT_ID}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <SpaceLogin />
+      </ThemeProvider>
+    </GoogleOAuthProvider>
   );
 };
 

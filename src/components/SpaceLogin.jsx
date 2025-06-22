@@ -28,6 +28,7 @@ import {
   ArrowForward,
 } from "@mui/icons-material";
 import AnimatedBackground from "./AnimatedBackground";
+import GoogleLoginButton from "./GoogleLoginButton";
 import {
   colors,
   gradients,
@@ -61,11 +62,6 @@ const SpaceLogin = () => {
 
     try {
       const endpoint = isMagicMode ? "/auth/magic" : "/auth/login";
-      console.log(
-        "🚀 Fazendo requisição para:",
-        `http://localhost:3000${endpoint}`
-      );
-      console.log("📦 Dados enviados:", formData);
 
       const response = await fetch(`http://localhost:3000${endpoint}`, {
         method: "POST",
@@ -79,7 +75,6 @@ const SpaceLogin = () => {
       });
 
       const data = await response.json();
-      console.log("📥 Resposta do servidor:", data);
 
       if (!response.ok) {
         throw new Error(data.message || "Erro ao fazer login");
@@ -88,9 +83,8 @@ const SpaceLogin = () => {
       if (isMagicMode) {
         setSuccess("Link de acesso enviado! Verifique seu email.");
       } else {
-        console.log("🔑 Token recebido:", data.token);
-        console.log("👤 Dados do usuário:", data.usuario);
         localStorage.setItem("token", data.token);
+        localStorage.setItem("usuario", JSON.stringify(data.usuario));
         setSuccess("Login realizado com sucesso!");
         setTimeout(() => {
           router.push("/home");
@@ -104,6 +98,26 @@ const SpaceLogin = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleGoogleSuccess = (data) => {
+    setSuccess("Login com Google realizado com sucesso!");
+
+    // Salvar token e dados do usuário no localStorage
+    if (data.token) {
+      localStorage.setItem("token", data.token);
+    }
+    if (data.usuario) {
+      localStorage.setItem("usuario", JSON.stringify(data.usuario));
+    }
+
+    setTimeout(() => {
+      router.push("/home");
+    }, 1000);
+  };
+
+  const handleGoogleError = (errorMessage) => {
+    setError(errorMessage);
   };
 
   const toggleMode = () => {
@@ -343,6 +357,12 @@ const SpaceLogin = () => {
                         ? "Log in with email"
                         : "Sign in"}
                     </Button>
+
+                    <GoogleLoginButton
+                      onSuccess={handleGoogleSuccess}
+                      onError={handleGoogleError}
+                      isLoading={isLoading}
+                    />
                   </Box>
 
                   {/* Informação adicional pra magic login */}
