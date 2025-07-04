@@ -1,26 +1,27 @@
 "use client";
 
 import React, { useMemo } from "react";
-import { Box } from "@mui/material";
-import { optimizeRendering } from "../styles/theme";
 
 // Componente para estrelas individuais
 const Star = React.memo(({ star }) => (
-  <Box
-    sx={{
-      position: "absolute",
+  <div
+    className="absolute rounded-full animate-fall"
+    style={{
       left: `${star.x}%`,
       top: `${star.y}%`,
       width: `${star.size}px`,
       height: `${star.size}px`,
       backgroundColor: star.color,
-      borderRadius: "50%",
       boxShadow: `0 0 ${star.size * 2}px ${star.size * 0.8}px ${
         star.glowColor
       }`,
-      animation: `fall ${star.duration}s cubic-bezier(0.4, 0, 0.2, 1) ${star.delay}s infinite`,
+      animationDuration: `${star.duration}s`,
+      animationDelay: `${star.delay}s`,
       opacity: star.opacity,
-      ...optimizeRendering,
+      transform: "translateZ(0)",
+      backfaceVisibility: "hidden",
+      perspective: "1000px",
+      willChange: "transform, opacity",
     }}
   />
 ));
@@ -67,54 +68,14 @@ const AnimatedBackground = React.memo(() => {
   }, []);
 
   return (
-    <Box
-      sx={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        overflow: "hidden",
-        zIndex: 0,
-        background:
-          "linear-gradient(180deg, #034a6b 0%, #096c9e 30%, #0891b2 60%, #06b6d4 80%, rgba(40, 167, 69, 0.85) 100%)",
-        "&::before": {
-          content: '""',
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-        },
-      }}
-    >
+    <div className="fixed inset-0 overflow-hidden z-0 bg-gradient-background">
       {stars.map((star) => (
         <Star key={`star-${star.id}`} star={star} />
       ))}
 
       <style jsx global>{`
-        @keyframes fall {
-          0% {
-            transform: translateY(-100vh) translateX(0) rotate(0deg)
-              translateZ(0);
-            opacity: 0;
-          }
-          15% {
-            opacity: var(--star-opacity, 0.8);
-          }
-          85% {
-            opacity: var(--star-opacity, 0.8);
-          }
-          100% {
-            transform: translateY(100vh)
-              translateX(calc(var(--fall-offset, 0) * 1px)) rotate(60deg)
-              translateZ(0);
-            opacity: 0;
-          }
-        }
-
         @media (prefers-reduced-motion: reduce) {
-          .star {
+          .animate-fall {
             animation: none;
           }
         }
@@ -130,7 +91,7 @@ const AnimatedBackground = React.memo(() => {
           }
         }
       `}</style>
-    </Box>
+    </div>
   );
 });
 

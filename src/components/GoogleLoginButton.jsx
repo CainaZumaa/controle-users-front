@@ -1,6 +1,5 @@
-import { Button } from "@mui/material";
-import { Google } from "@mui/icons-material";
 import { useGoogleLogin } from "@react-oauth/google";
+import { Google } from "@mui/icons-material";
 
 const GoogleLoginButton = ({ onSuccess, onError, isLoading }) => {
   const login = useGoogleLogin({
@@ -41,31 +40,15 @@ const GoogleLoginButton = ({ onSuccess, onError, isLoading }) => {
   });
 
   return (
-    <Button
-      fullWidth
-      variant="outlined"
+    <button
+      type="button"
       onClick={() => login()}
       disabled={isLoading}
-      startIcon={<Google />}
-      sx={{
-        mt: 2,
-        py: 2,
-        borderColor: "rgba(255, 255, 255, 0.3)",
-        color: "#ffffff",
-        "&:hover": {
-          borderColor: "#ffffff",
-          backgroundColor: "rgba(255, 255, 255, 0.1)",
-          transform: "translateY(-2px)",
-        },
-        "&:disabled": {
-          opacity: 0.5,
-        },
-        transition: "all 0.3s ease",
-        fontWeight: "bold",
-      }}
+      className="w-full mt-2 py-3 px-4 border border-white/30 text-white font-bold rounded-xl transition-all duration-300 ease-in-out hover:border-white hover:bg-white/10 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
     >
+      <Google sx={{ fontSize: 20 }} />
       {isLoading ? "Entrando..." : "Continuar com Google"}
-    </Button>
+    </button>
   );
 };
 

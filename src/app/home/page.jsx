@@ -2,15 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Box, Container, Typography, Button, Paper } from "@mui/material";
 import { Logout } from "@mui/icons-material";
-import {
-  colors,
-  gradients,
-  shadows,
-  glassEffect,
-  transitions,
-} from "../../styles/theme";
 
 const decodeUTF8 = (str) => {
   try {
@@ -26,98 +18,63 @@ const HomePage = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    const storedUser = localStorage.getItem("usuario");
+
     if (!token) {
       router.push("/");
       return;
     }
 
-    try {
-      const [, payload] = token.split(".");
-      const decoded = atob(payload.replace(/-/g, "+").replace(/_/g, "/"));
-      const { nome } = JSON.parse(decoded);
-      setUserName(decodeUTF8(nome));
-    } catch {
-      setUserName("Usuário");
+    if (storedUser) {
+      try {
+        const user = JSON.parse(storedUser);
+        setUserName(user.nome || "Usuário");
+      } catch {
+        setUserName("Usuário");
+      }
+    } else {
+      // Fallback para o token se não houver usuário no localStorage
+      try {
+        const [, payload] = token.split(".");
+        const decoded = atob(payload.replace(/-/g, "+").replace(/_/g, "/"));
+        const { nome } = JSON.parse(decoded);
+        setUserName(decodeUTF8(nome));
+      } catch {
+        setUserName("Usuário");
+      }
     }
   }, [router]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("usuario"); // Limpar também o usuário
     router.push("/");
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: "100vh",
-        background: "#096c9e",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <Container maxWidth="sm">
-        <Paper
-          sx={{
-            ...glassEffect,
-            p: 4,
-            borderRadius: 3,
-            boxShadow: shadows.hover,
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: 3,
-            }}
-          >
-            <Typography
-              variant="h4"
-              sx={{
-                background: gradients.text,
-                backgroundClip: "text",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                fontWeight: "bold",
-              }}
-            >
+    <div className="min-h-screen bg-primary-main flex items-center justify-center">
+      <div className="max-w-md w-full mx-4">
+        <div className="bg-white/10 backdrop-blur-glass border border-white/20 rounded-3xl shadow-glass p-6">
+          <div className="flex flex-col items-center gap-6">
+            <h1 className="text-2xl font-bold text-white">
               Bem-vindo, {userName}!
-            </Typography>
+            </h1>
 
-            <Typography
-              variant="body1"
-              sx={{ color: colors.text.secondary, textAlign: "center" }}
-            >
+            <p className="text-text-secondary text-center">
               Você está logado com sucesso!
-            </Typography>
+            </p>
 
-            <Button
-              variant="contained"
+            <button
               onClick={handleLogout}
-              startIcon={<Logout />}
-              sx={{
-                mt: 2,
-                background: gradients.primary,
-                "&:hover": {
-                  background: gradients.secondary,
-                  transform: "translateY(-2px)",
-                },
-                transition: transitions.smooth,
-                color: colors.text.primary,
-                fontWeight: "bold",
-                boxShadow: shadows.button,
-                px: 4,
-                py: 1.5,
-              }}
+              className="mt-2 bg-gradient-primary hover:bg-gradient-secondary hover:-translate-y-0.5 transition-all duration-300 ease-in-out text-text-primary font-bold shadow-button px-6 py-2 rounded-xl flex items-center gap-2"
             >
+              <Logout sx={{ fontSize: 20 }} />
               Sair
-            </Button>
-          </Box>
-        </Paper>
-      </Container>
-    </Box>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
