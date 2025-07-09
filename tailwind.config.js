@@ -36,6 +36,10 @@ export default {
           "linear-gradient(135deg, #096c9e 0%, #28a745 50%, #17a2b8 100%)",
         "gradient-secondary":
           "linear-gradient(135deg, #28a745 50%, #17a2b8 100%)",
+        "gradient-primary-dark":
+          "linear-gradient(135deg, #075985 0%, #22863a 50%, #0e7490 100%)",
+        "gradient-secondary-dark":
+          "linear-gradient(135deg, #22863a 50%, #0e7490 100%)",
         "gradient-text": "#f0f0f0",
         "gradient-button": "linear-gradient(45deg, #ff1493 30%, #ba55d3 90%)",
         "gradient-background":

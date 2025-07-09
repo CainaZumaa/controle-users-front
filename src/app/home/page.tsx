@@ -3,8 +3,9 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Logout } from "@mui/icons-material";
+import { User } from "../../types";
 
-const decodeUTF8 = (str) => {
+const decodeUTF8 = (str: string): string => {
   try {
     return decodeURIComponent(escape(str));
   } catch {
@@ -14,7 +15,7 @@ const decodeUTF8 = (str) => {
 
 const HomePage = () => {
   const router = useRouter();
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState<string>("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -27,7 +28,7 @@ const HomePage = () => {
 
     if (storedUser) {
       try {
-        const user = JSON.parse(storedUser);
+        const user: User = JSON.parse(storedUser);
         setUserName(user.nome || "Usuário");
       } catch {
         setUserName("Usuário");
@@ -37,7 +38,7 @@ const HomePage = () => {
       try {
         const [, payload] = token.split(".");
         const decoded = atob(payload.replace(/-/g, "+").replace(/_/g, "/"));
-        const { nome } = JSON.parse(decoded);
+        const { nome }: { nome: string } = JSON.parse(decoded);
         setUserName(decodeUTF8(nome));
       } catch {
         setUserName("Usuário");
@@ -68,7 +69,7 @@ const HomePage = () => {
               onClick={handleLogout}
               className="mt-2 bg-gradient-primary hover:bg-gradient-secondary hover:-translate-y-0.5 transition-all duration-300 ease-in-out text-text-primary font-bold shadow-button px-6 py-2 rounded-xl flex items-center gap-2"
             >
-              <Logout sx={{ fontSize: 20 }} />
+              <Logout className="w-5 h-5" />
               Sair
             </button>
           </div>

@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useMemo } from "react";
+import { Star, ColorPalette } from "../types";
 
 // Componente para estrelas individuais
-const Star = React.memo(({ star }) => (
+const StarComponent = React.memo(({ star }: { star: Star }) => (
   <div
     className="absolute rounded-full animate-fall"
     style={{
@@ -26,11 +27,11 @@ const Star = React.memo(({ star }) => (
   />
 ));
 
-Star.displayName = "Star";
+StarComponent.displayName = "StarComponent";
 
 const AnimatedBackground = React.memo(() => {
   // Paleta de cores harmoniosa com o gradiente azul ODS
-  const colorPalette = {
+  const colorPalette: ColorPalette = {
     stars: [
       { color: "#ffffff", glow: "rgba(255, 255, 255, 0.6)" }, // Branco puro
       { color: "#e8f4fd", glow: "rgba(232, 244, 253, 0.5)" }, // Azul muito claro
@@ -46,7 +47,7 @@ const AnimatedBackground = React.memo(() => {
   };
 
   // Configuração de estrelas com cores melhoradas
-  const stars = useMemo(() => {
+  const stars: Star[] = useMemo(() => {
     return Array.from({ length: 20 }, (_, i) => {
       const colorChoice =
         colorPalette.stars[
@@ -70,7 +71,7 @@ const AnimatedBackground = React.memo(() => {
   return (
     <div className="fixed inset-0 overflow-hidden z-0 bg-gradient-background">
       {stars.map((star) => (
-        <Star key={`star-${star.id}`} star={star} />
+        <StarComponent key={`star-${star.id}`} star={star} />
       ))}
 
       <style jsx global>{`

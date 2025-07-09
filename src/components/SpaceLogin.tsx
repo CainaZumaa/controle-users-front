@@ -13,17 +13,21 @@ import {
 } from "@mui/icons-material";
 import AnimatedBackground from "./AnimatedBackground";
 import GoogleLoginButton from "./GoogleLoginButton";
+import { LoginFormData, AuthResponse } from "../types";
 
 const SpaceLogin = () => {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-  const [isMagicMode, setIsMagicMode] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({ email: "", password: "" });
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isMagicMode, setIsMagicMode] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [formData, setFormData] = useState<LoginFormData>({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState<string>("");
+  const [success, setSuccess] = useState<string>("");
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -31,7 +35,7 @@ const SpaceLogin = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     setError("");
@@ -51,7 +55,7 @@ const SpaceLogin = () => {
         }),
       });
 
-      const data = await response.json();
+      const data: AuthResponse = await response.json();
 
       if (!response.ok) {
         throw new Error(data.message || "Erro ao fazer login");
@@ -70,14 +74,16 @@ const SpaceLogin = () => {
     } catch (error) {
       console.error("❌ Erro no login:", error);
       setError(
-        error.message || "Erro ao fazer login. Verifique suas credenciais."
+        error instanceof Error
+          ? error.message
+          : "Erro ao fazer login. Verifique suas credenciais."
       );
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleGoogleSuccess = (data) => {
+  const handleGoogleSuccess = (data: AuthResponse) => {
     setSuccess("Login com Google realizado com sucesso!");
 
     // Salvar token e dados do usuário no localStorage
@@ -93,7 +99,7 @@ const SpaceLogin = () => {
     }, 1000);
   };
 
-  const handleGoogleError = (errorMessage) => {
+  const handleGoogleError = (errorMessage: string) => {
     setError(errorMessage);
   };
 
@@ -109,7 +115,7 @@ const SpaceLogin = () => {
           {/* Logo e Título */}
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-secondary mb-4">
-              <AccountCircle sx={{ fontSize: 50, color: "white" }} />
+              <AccountCircle className="w-12 h-12 text-white" />
             </div>
             <h1 className="text-5xl font-bold mb-2 text-white bg-transparent whitespace-nowrap">
               Users Management
@@ -159,7 +165,7 @@ const SpaceLogin = () => {
                 {/* Campo de Email */}
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Email sx={{ fontSize: 20, color: "#cfcfcf" }} />
+                    <Email className="w-5 h-5 text-gray-400" />
                   </div>
                   <input
                     type="email"
@@ -176,7 +182,7 @@ const SpaceLogin = () => {
                 {!isMagicMode && (
                   <div className="relative animate-fade-in">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Lock sx={{ fontSize: 20, color: "#cfcfcf" }} />
+                      <Lock className="w-5 h-5 text-gray-400" />
                     </div>
                     <input
                       type={showPassword ? "text" : "password"}
@@ -193,9 +199,9 @@ const SpaceLogin = () => {
                       className="absolute inset-y-0 right-0 pr-3 flex items-center text-text-secondary hover:text-white transition-colors"
                     >
                       {showPassword ? (
-                        <VisibilityOff sx={{ fontSize: 20 }} />
+                        <VisibilityOff className="w-5 h-5" />
                       ) : (
-                        <Visibility sx={{ fontSize: 20 }} />
+                        <Visibility className="w-5 h-5" />
                       )}
                     </button>
                   </div>
@@ -219,7 +225,7 @@ const SpaceLogin = () => {
                   ) : (
                     <>
                       {isMagicMode ? "Log in with email" : "Sign in"}
-                      <ArrowForward sx={{ fontSize: 20 }} />
+                      <ArrowForward className="w-5 h-5" />
                     </>
                   )}
                 </button>
@@ -235,9 +241,7 @@ const SpaceLogin = () => {
               {isMagicMode && (
                 <div className="mt-6 p-4 bg-primary-main/20 border border-primary-main/70 text-white rounded-lg animate-fade-in">
                   <div className="flex items-start gap-2">
-                    <CheckCircle
-                      sx={{ fontSize: 20, color: "#0891b2", mt: 0.5 }}
-                    />
+                    <CheckCircle className="w-5 h-5 text-cyan-500 mt-0.5" />
                     <span>
                       ✨ We'll send you a secure login link - no password
                       needed!

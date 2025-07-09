@@ -24,14 +24,14 @@ export const GOOGLE_CONFIG = {
   },
 };
 
-export const isGoogleConfigured = () => {
-  return (
+export const isGoogleConfigured = (): boolean => {
+  return !!(
     GOOGLE_CONFIG.CLIENT_ID &&
     GOOGLE_CONFIG.CLIENT_ID !== "YOUR_GOOGLE_CLIENT_ID"
   );
 };
 
-export const getUserInfoFromToken = (accessToken) => {
+export const getUserInfoFromToken = (accessToken: string) => {
   try {
     return {
       access_token: accessToken,
