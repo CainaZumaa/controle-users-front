@@ -108,14 +108,14 @@ const SpaceLogin = () => {
   };
 
   return (
-    <div className="min-h-screen relative flex items-center justify-center -mt-10">
+    <div className="h-screen relative flex items-center justify-center overflow-hidden">
       <AnimatedBackground />
       <div className="relative z-10 max-w-md w-full mx-4">
         <div className="animate-fade-in">
           {/* Logo e Título */}
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-secondary mb-4">
-              <AccountCircle className="w-12 h-12 text-white" />
+              <AccountCircle className="w-60 h-14 text-white" />
             </div>
             <h1 className="text-5xl font-bold mb-2 text-white bg-transparent whitespace-nowrap">
               Users Management

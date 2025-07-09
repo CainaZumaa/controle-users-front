@@ -1,6 +1,8 @@
 import React from "react";
 import "./index.css";
 import "../styles/animations.css";
+import Topbar from "../components/Topbar";
+import BodyWrapper from "../components/BodyWrapper";
 
 export const metadata = {
   title: "Users Management",
@@ -14,7 +16,10 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="pt-BR">
-      <body>{children}</body>
+      <BodyWrapper>
+        <Topbar />
+        <main className="flex-1 overflow-hidden">{children}</main>
+      </BodyWrapper>
     </html>
   );
 }
