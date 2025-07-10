@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   AccountCircle,
@@ -13,13 +13,7 @@ import {
 } from "@mui/icons-material";
 import AnimatedBackground from "./AnimatedBackground";
 import GoogleLoginButton from "./GoogleLoginButton";
-import {
-  LoginFormData,
-  AuthResponse,
-  LoginResponse,
-  ValidateTokenResponse,
-  ExtendedUser,
-} from "../types";
+import { LoginFormData, AuthResponse, LoginResponse } from "../types";
 
 const SpaceLogin = () => {
   const router = useRouter();
@@ -32,53 +26,6 @@ const SpaceLogin = () => {
   });
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [user, setUser] = useState<ExtendedUser | null>(null);
-
-  // Verificar autenticação qnd carregar
-  useEffect(() => {
-    checkAuthStatus();
-  }, []);
-
-  const checkAuthStatus = async () => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
-
-    try {
-      const response = await fetch("http://localhost:3000/auth/validate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const data: ValidateTokenResponse = await response.json();
-
-      if (data.valid && data.user) {
-        setIsAuthenticated(true);
-        setUser({
-          id: data.user.id.toString(),
-          email: data.user.email,
-          nome: data.user.email.split("@")[0], // Fallback
-          is_active: data.user.is_active,
-        });
-        router.push("/home");
-      } else {
-        // Token inválido -> limpar local Storage
-        localStorage.removeItem("token");
-        localStorage.removeItem("usuario");
-        setIsAuthenticated(false);
-        setUser(null);
-      }
-    } catch (error) {
-      console.error("Erro ao verificar autenticação:", error);
-      localStorage.removeItem("token");
-      localStorage.removeItem("usuario");
-      setIsAuthenticated(false);
-      setUser(null);
-    }
-  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -136,8 +83,6 @@ const SpaceLogin = () => {
         localStorage.setItem("token", loginData.token);
         localStorage.setItem("usuario", JSON.stringify(loginData.usuario));
 
-        setUser(loginData.usuario);
-        setIsAuthenticated(true);
         setSuccess("Login realizado com sucesso!");
 
         setTimeout(() => {
@@ -165,8 +110,6 @@ const SpaceLogin = () => {
     }
     if (data.usuario) {
       localStorage.setItem("usuario", JSON.stringify(data.usuario));
-      setUser(data.usuario);
-      setIsAuthenticated(true);
     }
 
     setTimeout(() => {
@@ -181,12 +124,6 @@ const SpaceLogin = () => {
   const toggleMode = () => {
     setIsMagicMode(!isMagicMode);
   };
-
-  // Se já estiver autenticado, redirecionar para home
-  if (isAuthenticated && user) {
-    router.push("/home");
-    return null; // Não renderizAr nada enquanto redireciona
-  }
 
   return (
     <div className="h-screen relative flex items-center justify-center overflow-hidden">
