@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   AccountCircle,
@@ -13,7 +13,32 @@ import {
 } from "@mui/icons-material";
 import AnimatedBackground from "./AnimatedBackground";
 import GoogleLoginButton from "./GoogleLoginButton";
-import { LoginFormData, AuthResponse } from "../types";
+import { LoginFormData, AuthResponse, User } from "../types";
+
+interface LoginResponse {
+  token: string;
+  usuario: User;
+}
+
+interface ValidateTokenResponse {
+  valid: boolean;
+  user?: {
+    id: number;
+    email: string;
+    is_active: boolean;
+  };
+  token_info?: {
+    issued_at: string;
+    expires_at: string;
+    expires_in_seconds: number;
+  };
+  error?: string;
+}
+
+// Atualizar o tipo User para incluir is_active
+interface ExtendedUser extends User {
+  is_active?: boolean;
+}
 
 const SpaceLogin = () => {
   const router = useRouter();
@@ -26,6 +51,53 @@ const SpaceLogin = () => {
   });
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [user, setUser] = useState<ExtendedUser | null>(null);
+
+  // Verificar autenticação qnd carregar
+  useEffect(() => {
+    checkAuthStatus();
+  }, []);
+
+  const checkAuthStatus = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    try {
+      const response = await fetch("http://localhost:3000/auth/validate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data: ValidateTokenResponse = await response.json();
+
+      if (data.valid && data.user) {
+        setIsAuthenticated(true);
+        setUser({
+          id: data.user.id.toString(),
+          email: data.user.email,
+          nome: data.user.email.split("@")[0], // Fallback
+          is_active: data.user.is_active,
+        });
+        router.push("/home");
+      } else {
+        // Token inválido -> limpar local Storage
+        localStorage.removeItem("token");
+        localStorage.removeItem("usuario");
+        setIsAuthenticated(false);
+        setUser(null);
+      }
+    } catch (error) {
+      console.error("Erro ao verificar autenticação:", error);
+      localStorage.removeItem("token");
+      localStorage.removeItem("usuario");
+      setIsAuthenticated(false);
+      setUser(null);
+    }
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -42,31 +114,51 @@ const SpaceLogin = () => {
     setSuccess("");
 
     try {
-      const endpoint = isMagicMode ? "/auth/magic" : "/auth/login";
+      let endpoint: string;
+      let requestBody: any;
+
+      if (isMagicMode) {
+        // Magic Link - only email
+        endpoint = "/auth/magic";
+        requestBody = {
+          email: formData.email,
+        };
+      } else {
+        // Login tradicional
+        endpoint = "/auth/login";
+        requestBody = {
+          email: formData.email,
+          senha: formData.password,
+        };
+      }
 
       const response = await fetch(`http://localhost:3000${endpoint}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          email: formData.email,
-          senha: formData.password,
-        }),
+        body: JSON.stringify(requestBody),
       });
 
-      const data: AuthResponse = await response.json();
+      const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Erro ao fazer login");
+        throw new Error(data.error || "Erro ao fazer login");
       }
 
       if (isMagicMode) {
         setSuccess("Link de acesso enviado! Verifique seu email.");
       } else {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("usuario", JSON.stringify(data.usuario));
+        // Login tradicional OK
+        const loginData = data as LoginResponse;
+
+        localStorage.setItem("token", loginData.token);
+        localStorage.setItem("usuario", JSON.stringify(loginData.usuario));
+
+        setUser(loginData.usuario);
+        setIsAuthenticated(true);
         setSuccess("Login realizado com sucesso!");
+
         setTimeout(() => {
           router.push("/home");
         }, 1000);
@@ -92,6 +184,8 @@ const SpaceLogin = () => {
     }
     if (data.usuario) {
       localStorage.setItem("usuario", JSON.stringify(data.usuario));
+      setUser(data.usuario);
+      setIsAuthenticated(true);
     }
 
     setTimeout(() => {
@@ -106,6 +200,12 @@ const SpaceLogin = () => {
   const toggleMode = () => {
     setIsMagicMode(!isMagicMode);
   };
+
+  // Se já estiver autenticado, redirecionar para home
+  if (isAuthenticated && user) {
+    router.push("/home");
+    return null; // Não renderizAr nada enquanto redireciona
+  }
 
   return (
     <div className="h-screen relative flex items-center justify-center overflow-hidden">
