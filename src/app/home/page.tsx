@@ -3,10 +3,11 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { User } from "../../types";
+import StartButton from "../../components/StartButton";
 
 const decodeUTF8 = (str: string): string => {
   try {
-    return decodeURIComponent(escape(str));
+    return decodeURIComponent(str);
   } catch {
     return str;
   }
@@ -45,12 +46,6 @@ const HomePage = () => {
     }
   }, [router]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("usuario"); // Limpar também o usuário
-    router.push("/");
-  };
-
   return (
     <div className="h-screen bg-primary-main flex items-center justify-center overflow-hidden">
       <div className="max-w-1xl w-full flex flex-col items-center text-center gap-8 py-12">
@@ -69,12 +64,7 @@ const HomePage = () => {
             draggable="false"
           />
         </div>
-        <button
-          onClick={() => router.push("#")}
-          className="mt-8 px-8 py-3 bg-secondary-main text-white font-bold rounded-xl shadow-lg hover:scale-105 transition-transform text-lg"
-        >
-          Começar agora
-        </button>
+        <StartButton />
       </div>
     </div>
   );
