@@ -25,6 +25,33 @@ export interface GoogleOAuthResponse {
   access_token: string;
 }
 
+// Tipos para resposta de login
+export interface LoginResponse {
+  token: string;
+  usuario: User;
+}
+
+// Tipos para validação de token
+export interface ValidateTokenResponse {
+  valid: boolean;
+  user?: {
+    id: number;
+    email: string;
+    is_active: boolean;
+  };
+  token_info?: {
+    issued_at: string;
+    expires_at: string;
+    expires_in_seconds: number;
+  };
+  error?: string;
+}
+
+// Tipo extended de user com prop a mais
+export interface ExtendedUser extends User {
+  is_active?: boolean;
+}
+
 // Tipos para props dos componentes
 export interface GoogleLoginButtonProps {
   onSuccess: (data: AuthResponse) => void;

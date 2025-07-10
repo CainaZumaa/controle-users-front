@@ -13,32 +13,13 @@ import {
 } from "@mui/icons-material";
 import AnimatedBackground from "./AnimatedBackground";
 import GoogleLoginButton from "./GoogleLoginButton";
-import { LoginFormData, AuthResponse, User } from "../types";
-
-interface LoginResponse {
-  token: string;
-  usuario: User;
-}
-
-interface ValidateTokenResponse {
-  valid: boolean;
-  user?: {
-    id: number;
-    email: string;
-    is_active: boolean;
-  };
-  token_info?: {
-    issued_at: string;
-    expires_at: string;
-    expires_in_seconds: number;
-  };
-  error?: string;
-}
-
-// Atualizar o tipo User para incluir is_active
-interface ExtendedUser extends User {
-  is_active?: boolean;
-}
+import {
+  LoginFormData,
+  AuthResponse,
+  LoginResponse,
+  ValidateTokenResponse,
+  ExtendedUser,
+} from "../types";
 
 const SpaceLogin = () => {
   const router = useRouter();
