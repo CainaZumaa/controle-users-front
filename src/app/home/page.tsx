@@ -53,7 +53,29 @@ const HomePage = () => {
 
   return (
     <div className="h-screen bg-primary-main flex items-center justify-center overflow-hidden">
-      {/* Conteúdo da página aqui */}
+      <div className="max-w-1xl w-full flex flex-col items-center text-center gap-8 py-12">
+        <h1 className="text-4xl md:text-4xl font-extrabold text-white drop-shadow-lg">
+          Seu sistema de gerenciamento de usuários
+        </h1>
+        <p className="text-lg md:text-xl text-white/80 mb-4">
+          Organize, controle e simplifique o acesso dos seus usuários com
+          segurança e praticidade.
+        </p>
+        <div className="w-full flex justify-center">
+          <img
+            src="/personal_data.svg"
+            alt="Gerenciamento de Usuários"
+            className="w-full max-w-sm md:max-w-md h-auto drop-shadow-2xl rounded-2xl bg-white/10 p-2"
+            draggable="false"
+          />
+        </div>
+        <button
+          onClick={() => router.push("#")}
+          className="mt-8 px-8 py-3 bg-secondary-main text-white font-bold rounded-xl shadow-lg hover:scale-105 transition-transform text-lg"
+        >
+          Começar agora
+        </button>
+      </div>
     </div>
   );
 };
