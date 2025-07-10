@@ -115,7 +115,7 @@ const SpaceLogin = () => {
           {/* Logo e Título */}
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-secondary mb-4">
-              <AccountCircle className="w-60 h-14 text-white" />
+              <AccountCircle className="w-14 h-14 text-white" />
             </div>
             <h1 className="text-5xl font-bold mb-2 text-white bg-transparent whitespace-nowrap">
               Users Management
