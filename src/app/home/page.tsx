@@ -34,7 +34,6 @@ const HomePage = () => {
         setUserName("Usuário");
       }
     } else {
-      // Fallback para o token se não houver usuário no localStorage
       try {
         const [, payload] = token.split(".");
         const decoded = atob(payload.replace(/-/g, "+").replace(/_/g, "/"));
@@ -47,7 +46,7 @@ const HomePage = () => {
   }, [router]);
 
   return (
-    <div className="h-screen bg-primary-main flex items-center justify-center overflow-hidden">
+    <div className="h-screen bg-primary-main flex items-center justify-center overflow-hidden -mt-16">
       <div className="max-w-1xl w-full flex flex-col items-center text-center gap-8 py-12">
         <h1 className="text-4xl md:text-4xl font-extrabold text-white drop-shadow-lg">
           Seu sistema de gerenciamento de usuários

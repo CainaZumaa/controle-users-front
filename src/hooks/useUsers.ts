@@ -1,5 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
-import { UserResponse, UserFormData, ApiError } from "../types";
+import {
+  UserResponse,
+  UserCreateRequest,
+  UserUpdateRequest,
+  ApiError,
+} from "../types";
 import UserService from "../services/userService";
 
 interface Notification {
@@ -19,8 +24,8 @@ interface UseUsersReturn {
     total: number;
     totalPages: number;
   };
-  createUser: (userData: UserFormData) => Promise<void>;
-  updateUser: (id: string, userData: UserFormData) => Promise<void>;
+  createUser: (userData: UserCreateRequest) => Promise<void>;
+  updateUser: (userData: UserUpdateRequest) => Promise<void>;
   deleteUser: (id: string) => Promise<void>;
   loadUsers: (page?: number, limit?: number) => Promise<void>;
   clearError: () => void;
@@ -86,7 +91,7 @@ export const useUsers = (): UseUsersReturn => {
   );
 
   const createUser = useCallback(
-    async (userData: UserFormData) => {
+    async (userData: UserCreateRequest) => {
       try {
         setError(null);
         const newUser = await UserService.createUser(userData);
@@ -104,12 +109,12 @@ export const useUsers = (): UseUsersReturn => {
   );
 
   const updateUser = useCallback(
-    async (id: string, userData: UserFormData) => {
+    async (userData: UserUpdateRequest) => {
       try {
         setError(null);
-        const updatedUser = await UserService.updateUser({ id, ...userData });
+        const updatedUser = await UserService.updateUser(userData);
         setUsers((prev) =>
-          prev.map((user) => (user.id === id ? updatedUser : user))
+          prev.map((user) => (user.id === userData.id ? updatedUser : user))
         );
         addNotification("Usuário atualizado com sucesso", "success");
       } catch (err) {

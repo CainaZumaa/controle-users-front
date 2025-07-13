@@ -19,6 +19,7 @@ import { useUsers } from "../hooks/useUsers";
 import Modal from "./Modal";
 import UserForm from "./UserForm";
 import Notification from "./Notification";
+import { UserCreateRequest, UserUpdateRequest } from "../types";
 
 interface UsersDataGridProps {
   className?: string;
@@ -52,6 +53,7 @@ const UsersDataGrid: React.FC<UsersDataGridProps> = ({ className = "" }) => {
   });
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [userToDelete, setUserToDelete] = useState<UserResponse | null>(null);
+  const [formKey, setFormKey] = useState(0);
 
   // Filtra usuários por termo de busca
   const filteredUsers = useMemo(() => {
@@ -80,6 +82,7 @@ const UsersDataGrid: React.FC<UsersDataGridProps> = ({ className = "" }) => {
     setModalType(type);
     setSelectedUser(user || null);
     setModalOpen(true);
+    setFormKey((prev) => prev + 1);
     clearError();
   };
 
@@ -103,7 +106,12 @@ const UsersDataGrid: React.FC<UsersDataGridProps> = ({ className = "" }) => {
   const handleCreateUser = async (userData: UserFormData) => {
     try {
       setFormLoading(true);
-      await createUser(userData);
+      const createData: UserCreateRequest = {
+        nome: userData.nome,
+        email: userData.email,
+        senha: userData.senha!,
+      };
+      await createUser(createData);
       closeModal();
       // Recarregar a página atual após criar
       loadUsers(pagination.page, pagination.limit);
@@ -120,7 +128,18 @@ const UsersDataGrid: React.FC<UsersDataGridProps> = ({ className = "" }) => {
 
     try {
       setFormLoading(true);
-      await updateUser(selectedUser.id, userData);
+      // Converter UserFormData para UserUpdateRequest
+      const updateData: UserUpdateRequest = {
+        id: selectedUser.id,
+        nome: userData.nome,
+        email: userData.email,
+        is_active: userData.is_active,
+      };
+      // Adicionar senha apenas se foi fornecida
+      if (userData.senha) {
+        updateData.senha = userData.senha;
+      }
+      await updateUser(updateData);
       closeModal();
       // Recarregar a página atual após atualizar
       loadUsers(pagination.page, pagination.limit);
@@ -277,6 +296,7 @@ const UsersDataGrid: React.FC<UsersDataGridProps> = ({ className = "" }) => {
       case "create":
         return (
           <UserForm
+            key={`create-form-${formKey}`}
             onSubmit={handleCreateUser}
             onCancel={closeModal}
             isLoading={formLoading}
@@ -285,6 +305,7 @@ const UsersDataGrid: React.FC<UsersDataGridProps> = ({ className = "" }) => {
       case "edit":
         return (
           <UserForm
+            key={`edit-form-${selectedUser?.id}-${formKey}`}
             user={selectedUser}
             onSubmit={handleUpdateUser}
             onCancel={closeModal}

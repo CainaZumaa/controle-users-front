@@ -98,13 +98,22 @@ export interface FormSubmitEvent {
 export interface UserFormData {
   nome: string;
   email: string;
+  senha?: string;
   is_active?: boolean;
 }
 
-export interface UserCreateRequest extends UserFormData {}
+export interface UserCreateRequest {
+  nome: string;
+  email: string;
+  senha: string;
+}
 
-export interface UserUpdateRequest extends Partial<UserFormData> {
+export interface UserUpdateRequest {
   id: string;
+  nome?: string;
+  email?: string;
+  senha?: string;
+  is_active?: boolean;
 }
 
 export interface UserDeleteRequest {
@@ -183,4 +192,21 @@ export interface FormField {
     maxLength?: number;
     message?: string;
   };
+}
+
+// Tipos para validação de senha
+export interface PasswordCheck {
+  length: boolean;
+  uppercase: boolean;
+  lowercase: boolean;
+  numbers: boolean;
+  symbols: boolean;
+  no_common: boolean;
+}
+
+export interface PasswordValidationResponse {
+  password_strength: "weak" | "medium" | "strong";
+  score: string;
+  checks: PasswordCheck;
+  recommendations: string[];
 }

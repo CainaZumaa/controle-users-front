@@ -90,22 +90,17 @@ export class UserService {
 
   // Create novo usuário
   static async createUser(userData: UserCreateRequest): Promise<UserResponse> {
-    try {
-      const response = await api.post("/usuarios", userData);
-      const user = response.data.data;
-
-      return {
-        id: user.id.toString(),
-        nome: user.nome,
-        email: user.email,
-        foto_perfil: user.foto_perfil,
-        is_active: user.is_active,
-        created_at: user.created_at,
-        last_login: user.last_login,
-      };
-    } catch (error) {
-      throw error as ApiError;
-    }
+    const response = await api.post("/usuarios", userData);
+    const user = response.data.data;
+    return {
+      id: user.id.toString(),
+      nome: user.nome,
+      email: user.email,
+      foto_perfil: user.foto_perfil || null,
+      is_active: user.is_active,
+      created_at: user.created_at,
+      last_login: user.last_login,
+    };
   }
 
   // Update usuário
@@ -117,6 +112,7 @@ export class UserService {
 
       if (data.nome) updateData.nome = data.nome;
       if (data.email) updateData.email = data.email;
+      if (data.senha) updateData.senha = data.senha;
       if (data.is_active !== undefined) updateData.is_active = data.is_active;
 
       const response = await api.put(`/usuarios/${id}`, updateData);
