@@ -483,82 +483,84 @@ const UsersDataGrid: React.FC<UsersDataGridProps> = ({ className = "" }) => {
         )}
 
         {/* DataGrid */}
-        <div className="h-[600px] w-full">
-          <DataGrid
-            rows={filteredUsers}
-            columns={columns}
-            loading={loading}
-            pagination
-            paginationModel={paginationModel}
-            onPaginationModelChange={setPaginationModel}
-            pageSizeOptions={[5, 10, 25, 50]}
-            rowCount={pagination.total}
-            paginationMode="server"
-            disableRowSelectionOnClick
-            sx={{
-              backgroundColor: "transparent",
-              border: "none",
-              "& .MuiDataGrid-cell": {
-                borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
-                color: "white",
-              },
-              "& .MuiDataGrid-columnHeaders": {
-                backgroundColor: "rgba(255, 255, 255, 0.05)",
-                borderBottom: "1px solid rgba(255, 255, 255, 0.2)",
-              },
-              "& .MuiDataGrid-columnHeader": {
-                backgroundColor: "rgba(255, 255, 255, 0.05)",
-                color: "white",
-              },
-              "& .MuiDataGrid-columnHeaderTitle": {
-                color: "white",
-                fontWeight: "600",
-              },
-              "& .MuiDataGrid-columnHeaderTitleContainer": {
-                color: "white",
-              },
-              "& .MuiDataGrid-columnHeaderTitleContainerContent": {
-                color: "white",
-              },
-              "& .MuiDataGrid-row:hover": {
-                backgroundColor: "rgba(255, 255, 255, 0.05)",
-              },
-              "& .MuiDataGrid-footerContainer": {
-                backgroundColor: "rgba(255, 255, 255, 0.05)",
-                borderTop: "1px solid rgba(255, 255, 255, 0.2)",
-                color: "white",
-              },
-              "& .MuiTablePagination-root": {
-                color: "white",
-              },
-              "& .MuiDataGrid-virtualScroller": {
+        <div className="w-full overflow-x-auto">
+          <div className="min-w-[600px] h-[600px]">
+            <DataGrid
+              rows={filteredUsers}
+              columns={columns}
+              loading={loading}
+              pagination
+              paginationModel={paginationModel}
+              onPaginationModelChange={setPaginationModel}
+              pageSizeOptions={[5, 10, 25, 50]}
+              rowCount={pagination.total}
+              paginationMode="server"
+              disableRowSelectionOnClick
+              sx={{
                 backgroundColor: "transparent",
-              },
-              "& .MuiDataGrid-columnSeparator": {
-                color: "rgba(255, 255, 255, 0.2)",
-              },
-              "& .MuiDataGrid-columnHeader:focus": {
-                outline: "none",
-              },
-              "& .MuiDataGrid-columnHeader:focus-within": {
-                outline: "none",
-              },
-              "& .MuiDataGrid-overlay": {
-                backgroundColor: "transparent",
-                color: "rgba(255, 255, 255, 0.7)",
-              },
-              "& .MuiDataGrid-overlayWrapper": {
-                backgroundColor: "transparent",
-              },
-              "& .MuiDataGrid-overlayWrapperInner": {
-                backgroundColor: "transparent",
-              },
-              "& .MuiDataGrid-overlayWrapperInner .MuiDataGrid-overlay": {
-                backgroundColor: "transparent",
-                color: "rgba(255, 255, 255, 0.7)",
-              },
-            }}
-          />
+                border: "none",
+                "& .MuiDataGrid-cell": {
+                  borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+                  color: "white",
+                },
+                "& .MuiDataGrid-columnHeaders": {
+                  backgroundColor: "rgba(255, 255, 255, 0.05)",
+                  borderBottom: "1px solid rgba(255, 255, 255, 0.2)",
+                },
+                "& .MuiDataGrid-columnHeader": {
+                  backgroundColor: "rgba(255, 255, 255, 0.05)",
+                  color: "white",
+                },
+                "& .MuiDataGrid-columnHeaderTitle": {
+                  color: "white",
+                  fontWeight: "600",
+                },
+                "& .MuiDataGrid-columnHeaderTitleContainer": {
+                  color: "white",
+                },
+                "& .MuiDataGrid-columnHeaderTitleContainerContent": {
+                  color: "white",
+                },
+                "& .MuiDataGrid-row:hover": {
+                  backgroundColor: "rgba(255, 255, 255, 0.05)",
+                },
+                "& .MuiDataGrid-footerContainer": {
+                  backgroundColor: "rgba(255, 255, 255, 0.05)",
+                  borderTop: "1px solid rgba(255, 255, 255, 0.2)",
+                  color: "white",
+                },
+                "& .MuiTablePagination-root": {
+                  color: "white",
+                },
+                "& .MuiDataGrid-virtualScroller": {
+                  backgroundColor: "transparent",
+                },
+                "& .MuiDataGrid-columnSeparator": {
+                  color: "rgba(255, 255, 255, 0.2)",
+                },
+                "& .MuiDataGrid-columnHeader:focus": {
+                  outline: "none",
+                },
+                "& .MuiDataGrid-columnHeader:focus-within": {
+                  outline: "none",
+                },
+                "& .MuiDataGrid-overlay": {
+                  backgroundColor: "transparent",
+                  color: "rgba(255, 255, 255, 0.7)",
+                },
+                "& .MuiDataGrid-overlayWrapper": {
+                  backgroundColor: "transparent",
+                },
+                "& .MuiDataGrid-overlayWrapperInner": {
+                  backgroundColor: "transparent",
+                },
+                "& .MuiDataGrid-overlayWrapperInner .MuiDataGrid-overlay": {
+                  backgroundColor: "transparent",
+                  color: "rgba(255, 255, 255, 0.7)",
+                },
+              }}
+            />
+          </div>
         </div>
 
         {/* Modal */}

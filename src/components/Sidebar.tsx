@@ -2,14 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import {
-  People,
-  Dashboard,
-  Settings,
-  Logout,
-  Menu,
-  Close,
-} from "@mui/icons-material";
+import { People, Dashboard, Settings, Menu, Close } from "@mui/icons-material";
 
 interface SidebarProps {
   className?: string;
@@ -64,11 +57,6 @@ const Sidebar: React.FC<SidebarProps> = ({
     setIsMobileOpen(false);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    router.push("/login");
-  };
-
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
@@ -82,8 +70,9 @@ const Sidebar: React.FC<SidebarProps> = ({
       {/* Mobile overlay */}
       {isMobileOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          className="fixed inset-0 bg-black/60 z-40 lg:hidden"
           onClick={toggleMobileSidebar}
+          style={{ backdropFilter: "none" }}
         />
       )}
 
@@ -142,15 +131,6 @@ const Sidebar: React.FC<SidebarProps> = ({
         </nav>
 
         {/* Footer */}
-        <div className="p-4 border-t border-white/20">
-          <button
-            onClick={handleLogout}
-            className="w-full flex items-center space-x-3 px-3 py-3 rounded-xl text-white/70 hover:text-white hover:bg-white/10 transition-all duration-200"
-          >
-            <Logout className="w-6 h-6" />
-            {isOpen && <span className="font-medium">Sair</span>}
-          </button>
-        </div>
       </div>
     </>
   );
