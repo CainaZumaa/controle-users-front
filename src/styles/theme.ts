@@ -75,6 +75,16 @@ export const colors = {
     light: "#6EE7B7",
     dark: "#059669",
   } as ColorPalette,
+  warning: {
+    main: "#F59E0B",
+    light: "#FCD34D",
+    dark: "#D97706",
+  } as ColorPalette,
+  info: {
+    main: "#3B82F6",
+    light: "#93C5FD",
+    dark: "#1D4ED8",
+  } as ColorPalette,
 };
 
 // Gradientes (para referência)

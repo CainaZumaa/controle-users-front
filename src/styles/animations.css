@@ -46,6 +46,17 @@
   }
 }
 
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 @keyframes pulse {
   0%,
   100% {
@@ -102,6 +113,10 @@
   animation: slideUp var(--animation-duration-normal) var(--animation-timing);
 }
 
+.animate-slide-in {
+  animation: slideIn var(--animation-duration-normal) var(--animation-timing);
+}
+
 .animate-pulse {
   animation: pulse var(--animation-duration-slow) var(--animation-timing)
     infinite;
@@ -125,6 +140,7 @@
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-in,
   .animate-slide-up,
+  .animate-slide-in,
   .animate-pulse,
   .animate-star,
   .animate-float,
@@ -163,4 +179,50 @@
 
 .hover-scale:hover {
   transform: scale(1.05);
+}
+
+/* Estilos para dropdowns no tema escuro */
+select {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+select option {
+  background-color: #1f2937;
+  color: white;
+}
+
+select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+/* Estilo para o ícone do dropdown */
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: 40px;
+}
+
+/* Estilos para mensagem "No results found" do DataGrid */
+.MuiDataGrid-overlayWrapper {
+  background-color: transparent;
+}
+
+.MuiDataGrid-overlayWrapperInner {
+  background-color: transparent;
+}
+
+.MuiDataGrid-overlay {
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.MuiDataGrid-overlayWrapperInner .MuiDataGrid-overlay {
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.7);
 }

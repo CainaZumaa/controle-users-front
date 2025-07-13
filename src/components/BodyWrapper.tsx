@@ -11,6 +11,6 @@ export default function BodyWrapper({
   const bgClass =
     pathname === "/" ? "bg-gradient-background" : "bg-primary-main";
   return (
-    <body className={`${bgClass}`}>{children}</body>
+    <body className={`${bgClass} h-screen overflow-hidden`}>{children}</body>
   );
 }

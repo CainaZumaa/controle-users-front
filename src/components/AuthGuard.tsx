@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { CircularProgress } from '@mui/material';
+import { CircularProgress } from "@mui/material";
+import AuthenticatedLayout from "./AuthenticatedLayout";
 
 interface AuthGuardProps {
   children: React.ReactNode;
@@ -85,7 +86,7 @@ const AuthGuard = ({ children }: AuthGuardProps) => {
     );
   }
 
-  // qnd a route é pública sempre mostra
+  // qnd a route é pública sempre mostra sem Topbar/Sidebar
   if (isPublicRoute) {
     return <>{children}</>;
   }
@@ -102,8 +103,8 @@ const AuthGuard = ({ children }: AuthGuardProps) => {
     );
   }
 
-  // Usuário autenticado, mostrar conteúdo
-  return <>{children}</>;
+  // Usuário autenticado, mostrar conteúdo com Topbar e Sidebar
+  return <AuthenticatedLayout>{children}</AuthenticatedLayout>;
 };
 
 export default AuthGuard;

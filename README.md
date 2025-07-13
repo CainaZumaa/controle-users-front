@@ -1,75 +1,173 @@
-# User Management Frontend
+# Sistema de Gerenciamento de Usuários
 
-Interface moderna e responsiva para o sistema centralizado de gerenciamento de usuários.
+Um sistema completo de gerenciamento de usuários desenvolvido com Next.js, TypeScript e Material-UI, seguindo as melhores práticas de UX/UI e arquitetura de software.
 
-## 📋 Sobre o Projeto
+## 🚀 Funcionalidades
 
-Frontend desenvolvido para integrar com a **API de Gerenciamento de Usuários**, oferecendo uma experiência de usuário moderna e intuitiva. Implementa autenticação tradicional e Magic Link, com animações suaves e design responsivo.
+### CRUD Completo de Usuários
 
-## 🚀 Tecnologias
+- **Criar**: Adicionar novos usuários com validação de formulário
+- **Ler**: Visualizar lista de usuários com busca e paginação
+- **Atualizar**: Editar informações dos usuários existentes
+- **Deletar**: Remover usuários com confirmação
 
-- **React** - Biblioteca JavaScript
-- **Next.js** - Framework React
-- **Material-UI** - Componentes de UI
-- **Emotion** - Estilização CSS-in-JS
+### Interface Moderna e Responsiva
+
+- Design glassmorphism com efeitos de blur
+- Animações suaves e transições
+- Layout responsivo para todos os dispositivos
+- Tema escuro com gradientes personalizados
+
+### Experiência do Usuário (UX)
+
+- Notificações em tempo real para feedback
+- Busca em tempo real
+- Paginação otimizada
+- Loading states e error handling
+- Confirmações para ações destrutivas
+
+## 🛠️ Tecnologias Utilizadas
+
+### Frontend
+
+- **Next.js 14** - Framework React com App Router
+- **TypeScript** - Tipagem estática
+- **Tailwind CSS** - Framework CSS utilitário
+- **Material-UI** - Componentes React
 - **Axios** - Cliente HTTP
-- **React Hook Form** - Gerenciamento de formulários
-- **JWT Decode** - Manipulação de tokens
-- **Framer Motion** - Animações
 
-## ⚙️ Configuração
+### Bibliotecas Principais
 
-### 1. Variáveis de Ambiente
+- `@mui/x-data-grid` - DataGrid para tabelas
+- `@mui/icons-material` - Ícones Material Design
+- `@emotion/react` & `@emotion/styled` - Styling
 
-Crie um arquivo `.env.local` na raiz do projeto:
+## 📁 Estrutura do Projeto
 
-```env
-# API
-NEXT_PUBLIC_API_URL=http://localhost:3000
-
-# Ambiente
-NODE_ENV=development
+```
+src/
+├── app/
+│   └── user/
+│       └── page.tsx          # Página principal de usuários
+├── components/
+│   ├── UsersDataGrid.tsx     # Componente principal do CRUD
+│   ├── UserForm.tsx          # Formulário de usuário
+│   ├── Modal.tsx             # Modal reutilizável
+│   ├── Notification.tsx      # Sistema de notificações
+│   └── ...                   # Outros componentes
+├── hooks/
+│   └── useUsers.ts           # Hook personalizado para usuários
+├── services/
+│   └── userService.ts        # Serviços de API
+├── types/
+│   └── index.ts              # Definições de tipos TypeScript
+└── styles/
+    ├── theme.ts              # Configuração de tema
+    └── animations.css        # Animações CSS
 ```
 
-### 2. Instalação
+## 🎨 Design System
+
+### Cores
+
+- **Primary**: Azul (#096c9e) - Cor principal
+- **Secondary**: Verde (#28a745) - Cor secundária
+- **Success**: Verde (#10B981) - Sucessos
+- **Error**: Vermelho (#EF4444) - Erros
+- **Warning**: Amarelo (#F59E0B) - Avisos
+- **Info**: Azul (#3B82F6) - Informações
+
+### Efeitos Visuais
+
+- **Glassmorphism**: Efeito de vidro com blur
+- **Gradientes**: Transições suaves entre cores
+- **Sombras**: Profundidade e elevação
+- **Animações**: Transições fluidas
+
+## 🔧 Configuração e Instalação
+
+### Pré-requisitos
+
+- Node.js 18+
+- npm ou yarn
+
+### Instalação
+
+1. **Clone o repositório**
 
 ```bash
-# Clone o repositório
-git clone https://github.com/seu-usuario/control-users-front.git
-cd control-users-front
+git clone <repository-url>
+cd users_management
+```
 
-# Instale as dependências
+2. **Instale as dependências**
+
+```bash
 npm install
+```
 
-# Inicie o servidor de desenvolvimento
+3. **Configure as variáveis de ambiente**
+
+```bash
+# .env.local
+NEXT_PUBLIC_API_URL=http://localhost:3000/api
+```
+
+4. **Execute o projeto**
+
+```bash
 npm run dev
 ```
 
-## 🎯 Funcionalidades
+O projeto estará disponível em `http://localhost:5000`
 
-### Autenticação
+## 📋 API Endpoints
 
-- **Login Tradicional**: Email e senha
-- **Magic Link**: Autenticação sem senha
-- **Persistência**: Tokens JWT no localStorage
-- **Proteção**: Rotas autenticadas
+O sistema espera os seguintes endpoints da API:
 
-## 🎯 Performance
+### Usuários
 
-### Otimizações Implementadas
+- `GET /api/users` - Listar usuários
+- `GET /api/users/:id` - Buscar usuário por ID
+- `POST /api/users` - Criar usuário
+- `PUT /api/users/:id` - Atualizar usuário
+- `DELETE /api/users/:id` - Deletar usuário
+- `POST /api/users/:id/photo` - Upload de foto
 
-- **Lazy Loading**: Componentes carregados sob demanda
-- **Memoização**: Uso de `useMemo` e `useCallback`
-- **Animações**: Otimizadas com `transform` e `opacity`
+### Formato de Resposta
 
-## 📱 Responsividade
+```json
+{
+  "data": {
+    "users": [
+      {
+        "id": "13",
+        "nome": "user",
+        "email": "user@example.com",
+        "foto_perfil": null
+      }
+    ],
+    "total": 1,
+    "page": 1,
+    "limit": 10
+  },
+  "message": "Usuários carregados com sucesso",
+  "success": true
+}
+```
 
-- **Mobile First**: Design adaptativo
-- **Breakpoints**:
-  - Mobile: < 600px
-  - Tablet: 600px - 960px
-  - Desktop: > 960px
+## 🎯 Funcionalidades Detalhadas
 
----
+### DataGrid
 
-**Desenvolvido para o Projeto Frontend Acadêmico** | Equipe Frontend - Sistema de Gerenciamento de Usuários
+- **Colunas**: ID, Nome, Email, Ações
+- **Busca**: Filtro em tempo real por nome e email
+- **Paginação**: Configurável (5, 10, 25, 50 itens)
+- **Ordenação**: Por colunas específicas
+- **Ações**: Visualizar, Editar, Deletar
+
+### Formulário de Usuário
+
+- **Validação**: Nome obrigatório, email válido
+- **Upload**: Foto de perfil com validação
+- **Estados**: Loading, erro, sucesso

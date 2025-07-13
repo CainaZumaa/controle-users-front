@@ -93,3 +93,120 @@ export interface InputChangeEvent {
 export interface FormSubmitEvent {
   preventDefault: () => void;
 }
+
+// Tipos para CRUD de usuários
+export interface UserFormData {
+  nome: string;
+  email: string;
+  senha?: string;
+  is_active?: boolean;
+}
+
+export interface UserCreateRequest {
+  nome: string;
+  email: string;
+  senha: string;
+}
+
+export interface UserUpdateRequest {
+  id: string;
+  nome?: string;
+  email?: string;
+  senha?: string;
+  is_active?: boolean;
+}
+
+export interface UserDeleteRequest {
+  id: string;
+}
+
+export interface UserResponse {
+  id: string;
+  nome: string;
+  email: string;
+  foto_perfil: string | null;
+  is_active?: boolean;
+  created_at?: string;
+  last_login?: string;
+}
+
+export interface UsersListResponse {
+  users: UserResponse[];
+  total: number;
+  page: number;
+  limit: number;
+}
+
+// Tipos para operações de API
+export interface ApiResponse<T> {
+  data: T;
+  message?: string;
+  success: boolean;
+}
+
+export interface ApiError {
+  message: string;
+  status: number;
+  details?: any;
+}
+
+// Tipos para DataGrid
+export interface DataGridColumn {
+  field: string;
+  headerName: string;
+  width?: number;
+  flex?: number;
+  sortable?: boolean;
+  filterable?: boolean;
+  renderCell?: (params: any) => React.ReactNode;
+}
+
+export interface DataGridAction {
+  id: string;
+  label: string;
+  icon: React.ReactNode;
+  onClick: (id: string) => void;
+  color?: "primary" | "secondary" | "error" | "warning" | "info" | "success";
+}
+
+// Tipos para modais
+export interface ModalProps {
+  open: boolean;
+  onClose: () => void;
+  title: string;
+  children: React.ReactNode;
+  maxWidth?: "xs" | "sm" | "md" | "lg" | "xl";
+}
+
+// Tipos para formulários
+export interface FormField {
+  name: string;
+  label: string;
+  type: "text" | "email" | "password" | "file" | "select";
+  required?: boolean;
+  placeholder?: string;
+  options?: Array<{ value: string; label: string }>;
+  validation?: {
+    pattern?: RegExp;
+    minLength?: number;
+    maxLength?: number;
+    message?: string;
+  };
+}
+
+// Tipos para validação de senha
+export interface PasswordCheck {
+  length: boolean;
+  uppercase: boolean;
+  lowercase: boolean;
+  numbers: boolean;
+  symbols: boolean;
+  no_common: boolean;
+}
+
+export interface PasswordValidationResponse {
+  password_strength: "weak" | "medium" | "strong";
+  score: string;
+  checks: PasswordCheck;
+  recommendations: string[];
+}
