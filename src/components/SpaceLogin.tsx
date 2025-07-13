@@ -131,9 +131,13 @@ const SpaceLogin = () => {
       <div className="relative z-10 max-w-md w-full mx-4">
         <div className="animate-fade-in">
           {/* Logo e Título */}
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-secondary mb-4">
-              <AccountCircle className="w-14 h-14 text-white" />
+          <div className="text-center mb-11">
+            <div className="inline-flex items-center justify-center w-28 h-28 sm:w-32 sm:h-32 rounded-full mb-4">
+              <img
+                src="/image.png"
+                alt="Logo ODS"
+                className="w-28 h-28 sm:w-32 sm:h-32 object-contain"
+              />
             </div>
             <h1 className="text-5xl font-bold mb-2 text-white bg-transparent whitespace-nowrap">
               Users Management

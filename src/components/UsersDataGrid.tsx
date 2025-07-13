@@ -190,7 +190,7 @@ const UsersDataGrid: React.FC<UsersDataGridProps> = ({ className = "" }) => {
       width: 80,
       sortable: false,
       renderCell: (params: any) => (
-        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-white/10">
+        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-white/10 my-1">
           {params.value ? (
             <img
               src={params.value}
