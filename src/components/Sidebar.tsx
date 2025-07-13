@@ -37,11 +37,11 @@ const Sidebar: React.FC<SidebarProps> = ({
       active: pathname === "/user",
     },
     {
-      id: "dashboard",
-      label: "Dashboard",
+      id: "module",
+      label: "Módulos",
       icon: <Dashboard className="w-6 h-6" />,
-      path: "/dashboard",
-      active: pathname === "/dashboard",
+      path: "/module",
+      active: pathname === "/module",
     },
     {
       id: "settings",
