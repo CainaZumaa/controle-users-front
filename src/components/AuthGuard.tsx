@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { CircularProgress } from "@mui/material";
 import AuthenticatedLayout from "./AuthenticatedLayout";
+import LoadingSpinner from "./LoadingSpinner";
 
 interface AuthGuardProps {
   children: React.ReactNode;
@@ -77,11 +77,11 @@ const AuthGuard = ({ children }: AuthGuardProps) => {
   // Loading enquanto verifica autenticação
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-primary-main">
-        <div className="text-center">
-          <CircularProgress size={40} sx={{ color: "white", mb: 2 }} />
-          <p className="text-white">Verificando autenticação...</p>
-        </div>
+      <div className="min-h-screen bg-primary-main">
+        <LoadingSpinner
+          message="Verificando autenticação..."
+          fullScreen={true}
+        />
       </div>
     );
   }
@@ -94,11 +94,8 @@ const AuthGuard = ({ children }: AuthGuardProps) => {
   // if, não está autenticado && não é rota pública -> mostrar loading até redirecionar
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-primary-main">
-        <div className="text-center">
-          <CircularProgress size={40} sx={{ color: "white", mb: 2 }} />
-          <p className="text-white">Redirecionando...</p>
-        </div>
+      <div className="min-h-screen bg-primary-main">
+        <LoadingSpinner message="Redirecionando..." fullScreen={true} />
       </div>
     );
   }

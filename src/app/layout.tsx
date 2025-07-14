@@ -3,6 +3,7 @@ import "./index.css";
 import "../styles/animations.css";
 import BodyWrapper from "../components/BodyWrapper";
 import AuthGuard from "../components/AuthGuard";
+import { LoadingProvider } from "../components/LoadingProvider";
 
 export const metadata = {
   title: "Users Management",
@@ -17,7 +18,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="pt-BR">
       <BodyWrapper>
-        <AuthGuard>{children}</AuthGuard>
+        <LoadingProvider>
+          <AuthGuard>{children}</AuthGuard>
+        </LoadingProvider>
       </BodyWrapper>
     </html>
   );
